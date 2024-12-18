@@ -4,6 +4,7 @@ dotenv.config()
 
 const sequelize = new Sequelize(process.env.URI, {
   dialect: 'postgres', // Explicitly provide the dialect
+  logging: false, // Disable SQL query logging
 }) // Example for postgres
 
 const connectionDB = async () => {
