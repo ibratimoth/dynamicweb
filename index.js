@@ -1,0 +1,31 @@
+const express = require("express");
+const path = require('path');
+const colors = require("colors");
+const dotenv = require("dotenv");
+const morgan = require("morgan");
+const { connectionDB } = require("./config/db")
+
+//configure env
+dotenv.config();
+
+//rest object
+const app = express();
+
+app.use(express.json());
+app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: false }));
+
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine','ejs');
+app.use(express.static('public'));
+
+//routes
+// app.use(router)
+app.use('/Home', require('./routes/userRoutes'));
+app.use('/admin', require('./routes/adminRoutes'));
+
+const PORT = process.env.PORT || 8086;
+app.listen(PORT, function(){
+    console.log(`Server is running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan.white)
+})
+connectionDB()

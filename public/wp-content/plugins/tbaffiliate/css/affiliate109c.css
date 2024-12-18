@@ -1,0 +1,43 @@
+.bears-purchaseref-wrap {
+    bottom: 10px;
+    line-height: normal;
+    position: fixed;
+    right: 10px;
+    z-index: 999;
+}
+.bears-purchaseref-wrap a {
+    display: inline-block;
+    vertical-align: middle;
+}
+.bears-purchaseref-wrap a.link-contact-ui {
+    margin-right: 10px;
+    opacity: 0.4;
+}
+.bears-purchaseref-wrap a.link-contact-ui:hover {
+    opacity: 0.6;
+}
+.bears-purchaseref-wrap a.link-contact-ui img {
+    width: 41px;
+}
+.bears-purchaseref-wrap a.link-purchase-iu {
+    background: #1b1b1b none repeat scroll 0 0;
+    border-radius: 30px;
+    color: #fff;
+    display: inline-block;
+    font-weight: bold;
+    padding: 14px 18px;
+}
+.bears-purchaseref-wrap a.link-purchase-iu span {
+    color: #fff;
+    font-family: caption;
+    font-style: italic;
+    font-weight: 400;
+}
+.bears-purchaseref-wrap a.link-purchase-iu img {
+    display: inline-block;
+    margin-top: -4px;
+    vertical-align: middle;
+}
+.bears-purchaseref-wrap a.link-purchase-iu img:first-child {
+    margin-right: 6px;
+}
