@@ -120,6 +120,40 @@ class ValidatorHelper {
 
         return { valid: true };
     }
+
+    validateNameTitleAndImage({ name, title, imageUrl, imageSize }) {
+        // Validate name and title
+        if (!name || !title) {
+            return { valid: false, message: "Name and title must not be empty" };
+        }
+    
+        // Validate imageUrl
+        if (!imageUrl) {
+            return { valid: false, message: "Image URL must not be empty" };
+        }
+    
+        const allowedImageExtensions = ['.jpeg', '.jpg', '.png'];
+        const extension = imageUrl.substring(imageUrl.lastIndexOf('.')).toLowerCase();
+    
+        if (!allowedImageExtensions.includes(extension)) {
+            return {
+                valid: false,
+                message: "Image must be a valid format (.jpeg, .jpg, or .png)",
+            };
+        }
+    
+        // Validate image size (in bytes, assuming imageSize is provided in bytes)
+        const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+        if (imageSize > maxSizeInBytes) {
+            return {
+                valid: false,
+                message: "Image size must not exceed 2MB",
+            };
+        }
+    
+        return { valid: true };
+    }
+    
 }
 
 module.exports = ValidatorHelper;

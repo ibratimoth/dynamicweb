@@ -79,6 +79,9 @@ class AuthController {
                 );
             }
     
+            // Store user ID in session
+            req.session.userId = user.id;
+
             // Send success response
             return this.responseHandler.sendResponse(
                 res,
@@ -99,6 +102,7 @@ class AuthController {
             );
         }
     }
+    
     
 }
 
