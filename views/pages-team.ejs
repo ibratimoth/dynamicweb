@@ -43,80 +43,17 @@
     />
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 
-    <!-- <style>
-      /* Wrapper for FilePond Input */
-.filepond-wrapper {
-    margin: 20px 0;
-    padding: 15px;
-    border: 2px dashed #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    text-align: center;
-    transition: border-color 0.3s ease;
-}
-
-.filepond-wrapper:hover {
-    border-color: #007bff;
-}
-
-/* FilePond Input Field */
-.filepond {
-    display: block;
-    width: 100%;
-    margin: 10px auto;
-    border: none;
-    background: transparent;
-    outline: none;
-    font-size: 16px;
-    color: #333;
-}
-
-/* FilePond Preview Styling */
-.filepond--item-panel {
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-}
-
-/* FilePond Progress Bar */
-.filepond--progress-bar {
-    height: 5px;
-    border-radius: 5px;
-    background-color: #007bff;
-    transition: width 0.4s ease;
-}
-
-/* FilePond File Info */
-.filepond--file-info {
-    font-size: 14px;
-    color: #555;
-}
-
-/* Error Styling */
-.filepond--error {
-    color: #d9534f;
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-/* Customizable Button for Remove */
-.filepond--action-remove-item {
-    color: #fff;
-    background-color: #d9534f;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.filepond--action-remove-item:hover {
-    background-color: #c9302c;
-}
-
-    </style> -->
+    <styles>
+      .spinner-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 1050;
+    }    
+    </styles>
   </head>
 
   <body>
@@ -293,14 +230,7 @@
                         ></i>
                         Load More
                       </a>
-                    </div> -->
-                    
-                    <!-- Spinner hidden initially -->
-<!-- <div id="spinner-container" class="d-flex justify-content-center align-items-center" style="height: 100vh; display: none;">
-  <div class="spinner-grow" role="status">
-      <span class="visually-hidden">Loading...</span>
-  </div>
-</div> -->          
+                    </div> -->          
           
                   </div>
                   <div
@@ -318,7 +248,7 @@
                   </div>
                   <!-- Modal -->
                   
-                <div id="team-members-container" class="row mt-4"></div>
+                  <div class="row" id="team-members-container"></div>
                   <div
                     class="modal fade"
                     id="addmemberModal"
@@ -838,6 +768,7 @@ FilePond.create(document.querySelector('.filepond'), {
                       timer: 2000, // Close after 2000 milliseconds
                   });
 
+                  // Fetch team members again after success
                   await fetchTeamMembers();
               } else if (response && response.statusCode === 400) {
                   Swal.fire({
@@ -914,55 +845,65 @@ function cancelImage(imageId, fileInputId) {
           try {
               // Show spinner
               const spinner = `
-                  <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-                      <div class="spinner-grow" role="status">
-                          <span class="visually-hidden">Loading...</span>
+                  <div id="team-members-spinner" class="spinner-container">
+                      <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+                          <div class="spinner-grow" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                          </div>
                       </div>
                   </div>`;
-              $('#team-members-container').append(spinner);
-  
+              $('body').append(spinner); // Append the spinner to the body to avoid conflicts
+
               const response = await $.ajax({
                   url: '/admin/team-members',
                   method: 'GET',
                   cache: false, // Disable caching
               });
-  
+
               // Remove spinner after data is loaded
-              $('.d-flex').remove();
-  
+              $('#team-members-spinner').remove();
+
               // Check if response is successful
               if (response && response.statusCode === 200) {
                   const teamMembers = response.data;
-  
+
                   // Clear existing cards
                   $('#team-members-container').empty();
-  
+
                   if (teamMembers.length === 0) {
-                      // Display message when no team members are found
-                      $('#team-members-container').append('<p>No team members found. Team member has not been created yet.</p>');
+                      
+                    // Append the success alert when no team members are found
+                    const successAlert = `
+                          <div class="alert alert-success alert-dismissible alert-label-icon rounded-label shadow fade show" role="alert">
+                              <i class="ri-notification-off-line label-icon"></i>
+                              <strong>No team members found</strong> - Team members have not been created yet.
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>`;
+                      $('#team-members-container').append(successAlert);
                   } else {
                       // Populate UI with team members
                       teamMembers.forEach(member => {
-                          const card = `
-                              <div class="card mb-3">
-                                  <div class="row g-0">
-                                      <div class="col-md-4">
-                                          <img class="rounded-start img-fluid h-100 object-fit-cover" src="/uploads/${member.imageUrl}" alt="Card image">
-                                      </div>
-                                      <div class="col-md-8">
-                                          <div class="card-header">
-                                              <h5 class="card-title mb-0">${member.title}</h5>
-                                          </div>
-                                          <div class="card-body">
-                                              <p class="card-text mb-2">${member.name}</p>
-                                              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>`;
-  
-                          $('#team-members-container').append(card);
-                      });
+                        const card = `
+                            <div class="col-xxl-6">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img class="rounded-start img-fluid h-100 object-fit-cover" src="/uploads/${member.imageUrl}" alt="Card image">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">${member.title}</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="card-text mb-2">${member.name}</p>
+                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        $('#team-members-container').append(card);
+                    });
                   }
               } else {
                   Swal.fire({
@@ -973,23 +914,23 @@ function cancelImage(imageId, fileInputId) {
               }
           } catch (error) {
               console.error('Error:', error);
-  
+
               // Handle errors specifically
               Swal.fire({
                   title: "Error!",
                   text: "Failed to fetch team members. Please check your connection and try again.",
                   icon: "error",
               });
-  
+
               // Remove spinner
-              $('.d-flex').remove();
+              $('#team-members-spinner').remove();
           }
       }
-  
+
       // Fetch team members after 1000 milliseconds (1 second) after page load
       setTimeout(fetchTeamMembers, 1000);
   });
-  </script>
+</script>
   
   </body>
 
