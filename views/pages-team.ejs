@@ -725,7 +725,7 @@ FilePond.create(document.querySelector('.filepond'), {
 });
 
     </script>
-<script>
+<!-- <script>
   $(document).ready(function () {
       // Handle form submission
       $('#addNewMember').on('click', async function (e) {
@@ -803,7 +803,7 @@ FilePond.create(document.querySelector('.filepond'), {
           }
       });
   });
-</script>
+</script> -->
 
 <script>
  function displaySelectedImage(event, elementId) {
@@ -838,7 +838,7 @@ function cancelImage(imageId, fileInputId) {
 
 </script>
 
-<script>
+<!-- <script>
   $(document).ready(function () {
       // Function to fetch all team members
       async function fetchTeamMembers() {
@@ -930,8 +930,179 @@ function cancelImage(imageId, fileInputId) {
       // Fetch team members after 1000 milliseconds (1 second) after page load
       setTimeout(fetchTeamMembers, 1000);
   });
-</script>
+</script> -->
   
+<script>
+  $(document).ready(function () {
+      // Function to fetch all team members
+      async function fetchTeamMembers() {
+          try {
+              // Show spinner
+              const spinner = `
+                  <div id="team-members-spinner" class="spinner-container">
+                    <div class="d-flex justify-content-center align-items-center vh-70">
+                        <div class="spinner-grow" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>`;
+              $('body').append(spinner); // Append the spinner to the body to avoid conflicts
+
+              const response = await $.ajax({
+                  url: '/admin/team-members',
+                  method: 'GET',
+                  cache: false, // Disable caching
+              });
+
+              // Remove spinner after data is loaded
+              $('#team-members-spinner').remove();
+
+              // Check if response is successful
+              if (response && response.statusCode === 200) {
+                  const teamMembers = response.data;
+
+                  // Clear existing cards
+                  $('#team-members-container').empty();
+
+                  if (teamMembers.length === 0) {
+                      
+                    // Append the success alert when no team members are found
+                    const successAlert = `
+                          <div class="alert alert-success alert-dismissible alert-label-icon rounded-label shadow fade show" role="alert">
+                              <i class="ri-notification-off-line label-icon"></i>
+                              <strong>No team members found</strong> - Team members have not been created yet.
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>`;
+                      $('#team-members-container').append(successAlert);
+                  } else {
+                      // Populate UI with team members
+                      teamMembers.forEach(member => {
+                        const card = `
+                            <div class="col-xxl-6">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img class="rounded-start img-fluid h-100 object-fit-cover" src="/uploads/${member.imageUrl}" alt="Card image"  style="width: 800px; height: 533px;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">${member.title}</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="card-text mb-2">${member.name}</p>
+                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        $('#team-members-container').append(card);
+                      });
+                  }
+              } else {
+                  Swal.fire({
+                      title: "Error!",
+                      text: response.message,
+                      icon: "error",
+                  });
+              }
+          } catch (error) {
+              console.error('Error:', error);
+
+              // Handle errors specifically
+              Swal.fire({
+                  title: "Error!",
+                  text: "Failed to fetch team members. Please check your connection and try again.",
+                  icon: "error",
+              });
+
+              // Remove spinner
+              $('#team-members-spinner').remove();
+          }
+      }
+
+      // Handle form submission
+      $('#addNewMember').on('click', async function (e) {
+          e.preventDefault();
+
+          // Create FormData object to handle multiple files and other inputs
+          const formData = new FormData($('#memberlist-form')[0]);
+          var fileInput = document.querySelector("#customFile1");
+          var file = fileInput.files[0];
+          console.log("file:", file);
+          formData.append('imageUrl', file);
+
+          // Log FormData to see the files and other fields
+          console.log([...formData.entries()]);
+
+          try {
+              // AJAX request using async/await
+              const response = await $.ajax({
+                  url: '/admin/create',
+                  method: 'POST',
+                  data: formData,
+                  processData: false, // Prevent jQuery from automatically processing data
+                  contentType: false, // Use FormData's default content type
+                  cache: false, // Prevent caching
+              });
+
+              // Handle different status codes
+              if (response && response.statusCode === 201) {
+
+                // Reset form fields
+                $('#memberlist-form')[0].reset();
+                $('#customFile1').val('');  // Clear the image input field
+                 // Hide the modal
+                 $('#addmemberModal').modal('hide');
+
+                  Swal.fire({
+                      title: "Good job!",
+                      text: response.message,
+                      icon: "success",
+                      timer: 2000, // Close after 2000 milliseconds
+                  });
+
+                  // Fetch team members again after success
+                  await fetchTeamMembers();
+              } else if (response && response.statusCode === 400) {
+                  Swal.fire({
+                      title: "Error!",
+                      text: response.message,
+                      icon: "error",
+                  });
+              } else {
+                  Swal.fire({
+                      title: "Unexpected Status!",
+                      text: "Something went wrong. Please try again later.",
+                      icon: "warning",
+                  });
+              }
+          } catch (error) {
+              console.error('Error:', error);
+
+              // Handle errors specifically using the responseJSON
+              if (error.status === 400 && error.responseJSON) {
+                  Swal.fire({
+                      title: "Error!",
+                      text: error.responseJSON.message || "Client-side error occurred.",
+                      icon: "error",
+                  });
+              } else {
+                  Swal.fire({
+                      title: "Error!",
+                      text: "Failed to submit the form. Please check your connection and try again.",
+                      icon: "error",
+                  });
+              }
+          }
+      });
+
+      // Initial fetch
+      setTimeout(fetchTeamMembers, 1000);
+  });
+</script>
+
+
   </body>
 
   <!-- Mirrored from themesbrand.com/velzon/html/material/pages-team.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 Sep 2024 18:56:53 GMT -->

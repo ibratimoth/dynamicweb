@@ -1,23 +1,24 @@
 const TeamMemberService = require('../services/TeamMemberServices');
 const ResponseHandler = require('../utils/ResponseHandler');
 const ValidatorHelper = require('../utils/validator');
-const upload = require('../Middlewares/uploadMiddleware');
-
+const ImageProcessor = require('../utils/imageProcessor'); // Import the ImageProcessor utility
+const path = require('path');
 class TeamMemberController {
     constructor() {
         this.teamMemberService = new TeamMemberService();
         this.responseHandler = new ResponseHandler();
         this.validatorHelper = new ValidatorHelper();
+        this.imageProcessor = new ImageProcessor(); // Initialize ImageProcessor
     }
 
     async createTeamMember(req, res) {
         try {
             const { name, title } = req.body;
-            const imageUrl = req.file ? req.file.filename : null;
+            let imageUrl = req.file ? req.file.filename : null;
             const imageSize = req.file ? req.file.size : 0;
 
             // Validate input
-            const validation = this.validatorHelper.validateNameTitleAndImage({ name, title, imageUrl, imageSize});
+            const validation = this.validatorHelper.validateNameTitleAndImage({ name, title, imageUrl, imageSize });
             if (!validation.valid) {
                 return this.responseHandler.sendResponse(
                     res,
@@ -27,6 +28,11 @@ class TeamMemberController {
                 );
             }
 
+            /// Process the image
+            if (imageUrl) {
+                const resizedImagePath = await this.imageProcessor.processImage(path.join(__dirname, '../public/uploads/', imageUrl));
+                imageUrl = `/${resizedImagePath}`; // Ensure URL format for the frontend
+            }
             const newTeamMember = await this.teamMemberService.createTeamMember({
                 name,
                 title,
