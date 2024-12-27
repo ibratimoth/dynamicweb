@@ -28,11 +28,11 @@ class TeamMemberController {
                 );
             }
 
-            /// Process the image
             if (imageUrl) {
-                const resizedImagePath = await this.imageProcessor.processImage(path.join(__dirname, '../public/uploads/', imageUrl));
-                imageUrl = `/${resizedImagePath}`; // Ensure URL format for the frontend
+                const resizedImageName = await this.imageProcessor.processImage(path.join(__dirname, '../public/uploads/', imageUrl));
+                imageUrl = resizedImageName; // Store only the filename
             }
+
             const newTeamMember = await this.teamMemberService.createTeamMember({
                 name,
                 title,
