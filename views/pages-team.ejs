@@ -43,7 +43,7 @@
     />
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 
-    <styles>
+    <!-- <style>
       .spinner-container {
         position: fixed;
         top: 0;
@@ -53,7 +53,7 @@
         background-color: rgba(255, 255, 255, 0.8);
         z-index: 1050;
     }    
-    </styles>
+    </style> -->
   </head>
 
   <body>
@@ -203,6 +203,7 @@
                         class="btn btn-success addMembers-modal"
                         data-bs-toggle="modal"
                         data-bs-target="#addmemberModal"
+                        id="mine"
                       >
                         <i class="ri-add-fill me-1 align-bottom"></i> Add
                         Members
@@ -321,6 +322,7 @@
                                     <div class="hstack gap-2 justify-content-end">
                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                         <button type="button" class="btn btn-success" id="addNewMember">Add Member</button>
+                                        <button type="button" class="btn btn-success" id="updateMember" style="display: none;">update Member</button>
                                     </div>
                                 </div>
                             </div>
@@ -725,85 +727,6 @@ FilePond.create(document.querySelector('.filepond'), {
 });
 
     </script>
-<!-- <script>
-  $(document).ready(function () {
-      // Handle form submission
-      $('#addNewMember').on('click', async function (e) {
-          e.preventDefault();
-
-          // Create FormData object to handle multiple files and other inputs
-          const formData = new FormData($('#memberlist-form')[0]);
-          var fileInput = document.querySelector("#customFile1");
-          var file = fileInput.files[0];
-          console.log("file:", file);
-          formData.append('imageUrl', file);
-
-          // Log FormData to see the files and other fields
-          console.log([...formData.entries()]);
-
-          try {
-              // AJAX request using async/await
-              const response = await $.ajax({
-                  url: '/admin/create',
-                  method: 'POST',
-                  data: formData,
-                  processData: false, // Prevent jQuery from automatically processing data
-                  contentType: false, // Use FormData's default content type
-                  cache: false, // Prevent caching
-              });
-
-              // Handle different status codes
-              if (response && response.statusCode === 201) {
-
-                // Reset form fields
-                $('#memberlist-form')[0].reset();
-                
-                 // Hide the modal
-                 $('#addmemberModal').modal('hide');
-
-                  Swal.fire({
-                      title: "Good job!",
-                      text: response.message,
-                      icon: "success",
-                      timer: 2000, // Close after 2000 milliseconds
-                  });
-
-                  // Fetch team members again after success
-                  await fetchTeamMembers();
-              } else if (response && response.statusCode === 400) {
-                  Swal.fire({
-                      title: "Error!",
-                      text: response.message,
-                      icon: "error",
-                  });
-              } else {
-                  Swal.fire({
-                      title: "Unexpected Status!",
-                      text: "Something went wrong. Please try again later.",
-                      icon: "warning",
-                  });
-              }
-          } catch (error) {
-              console.error('Error:', error);
-
-              // Handle errors specifically using the responseJSON
-              if (error.status === 400 && error.responseJSON) {
-                  Swal.fire({
-                      title: "Error!",
-                      text: error.responseJSON.message || "Client-side error occurred.",
-                      icon: "error",
-                  });
-              } else {
-                  Swal.fire({
-                      title: "Error!",
-                      text: "Failed to submit the form. Please check your connection and try again.",
-                      icon: "error",
-                  });
-              }
-          }
-      });
-  });
-</script> -->
 
 <script>
  function displaySelectedImage(event, elementId) {
@@ -837,100 +760,6 @@ function cancelImage(imageId, fileInputId) {
 }
 
 </script>
-
-<!-- <script>
-  $(document).ready(function () {
-      // Function to fetch all team members
-      async function fetchTeamMembers() {
-          try {
-              // Show spinner
-              const spinner = `
-                  <div id="team-members-spinner" class="spinner-container">
-                      <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-                          <div class="spinner-grow" role="status">
-                              <span class="visually-hidden">Loading...</span>
-                          </div>
-                      </div>
-                  </div>`;
-              $('body').append(spinner); // Append the spinner to the body to avoid conflicts
-
-              const response = await $.ajax({
-                  url: '/admin/team-members',
-                  method: 'GET',
-                  cache: false, // Disable caching
-              });
-
-              // Remove spinner after data is loaded
-              $('#team-members-spinner').remove();
-
-              // Check if response is successful
-              if (response && response.statusCode === 200) {
-                  const teamMembers = response.data;
-
-                  // Clear existing cards
-                  $('#team-members-container').empty();
-
-                  if (teamMembers.length === 0) {
-                      
-                    // Append the success alert when no team members are found
-                    const successAlert = `
-                          <div class="alert alert-success alert-dismissible alert-label-icon rounded-label shadow fade show" role="alert">
-                              <i class="ri-notification-off-line label-icon"></i>
-                              <strong>No team members found</strong> - Team members have not been created yet.
-                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                          </div>`;
-                      $('#team-members-container').append(successAlert);
-                  } else {
-                      // Populate UI with team members
-                      teamMembers.forEach(member => {
-                        const card = `
-                            <div class="col-xxl-6">
-                                <div class="card mb-3">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img class="rounded-start img-fluid h-100 object-fit-cover" src="/uploads/${member.imageUrl}" alt="Card image">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-header">
-                                                <h5 class="card-title mb-0">${member.title}</h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <p class="card-text mb-2">${member.name}</p>
-                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`;
-                        $('#team-members-container').append(card);
-                    });
-                  }
-              } else {
-                  Swal.fire({
-                      title: "Error!",
-                      text: response.message,
-                      icon: "error",
-                  });
-              }
-          } catch (error) {
-              console.error('Error:', error);
-
-              // Handle errors specifically
-              Swal.fire({
-                  title: "Error!",
-                  text: "Failed to fetch team members. Please check your connection and try again.",
-                  icon: "error",
-              });
-
-              // Remove spinner
-              $('#team-members-spinner').remove();
-          }
-      }
-
-      // Fetch team members after 1000 milliseconds (1 second) after page load
-      setTimeout(fetchTeamMembers, 1000);
-  });
-</script> -->
   
 <script>
   $(document).ready(function () {
@@ -1104,7 +933,11 @@ function cancelImage(imageId, fileInputId) {
 
                 // Show the modal
                 $('#addmemberModal').modal('show');
-                $('#addNewMember').text('Update Member');
+                $('#updateMember').show(); // Show Update button
+                $('#addNewMember').hide(); // Show Update button
+                // $('#updateMember')
+                // .text('Update Member') // Set button to "Update Member"
+                // .data('action', 'update'); // Pass update action type
             } else {
                 Swal.fire({
                     title: "Error!",
@@ -1122,7 +955,7 @@ function cancelImage(imageId, fileInputId) {
         }
       });
 
-      $('#addNewMember').on('click', async function (e) {
+      $('#updateMember').on('click', async function (e) {
         e.preventDefault();
 
         const memberId = $('#memberid-input').val(); // Check if it's an update
@@ -1130,6 +963,7 @@ function cancelImage(imageId, fileInputId) {
         var fileInput = document.querySelector("#customFile1");
         var file = fileInput.files[0];
         console.log("file:", file);
+        console.log("memberId:", memberId);
         formData.append('imageUrl', file);
 
         // Log FormData to see the files and other fields
@@ -1147,12 +981,15 @@ function cancelImage(imageId, fileInputId) {
             });
 
             if (result.isConfirmed) {
-                 const url = memberId ? `/admin/update/${memberId}` : '/admin/create';
-                 const method = memberId ? 'PUT' : 'POST';
+        //       const url = $('#addNewMember').data('action') === 'update'
+        //     ? `/admin/update/${memberId}`
+        //     : '/admin/create';
+
+        // const method = $('#addNewMember').data('action') === 'update' ? 'PUT' : 'POST';
 
                 const response = await $.ajax({
-                    url: url,
-                    method: method,
+                    url: `/admin/update/${memberId}`,
+                    method: 'PUT',
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -1160,6 +997,8 @@ function cancelImage(imageId, fileInputId) {
 
                 if (response && response.statusCode === (memberId ? 200 : 201)) {
                     $('#addmemberModal').modal('hide'); // Hide the modal
+                    $('#updateMember').hide(); // hide Update button
+                    $('#addNewMember').show(); // Show add button
                     Swal.fire({
                         title: "Success!",
                         text: response.message,
@@ -1186,6 +1025,13 @@ function cancelImage(imageId, fileInputId) {
                 icon: "error",
             });
         }
+      });
+
+      $('#mine').on('click', async function (e) {
+        e.preventDefault();
+        console.log('imefika');
+        $('#updateMember').hide(); // hide Update button
+        $('#addNewMember').show(); // Show add button
       });
 
       // Handle form submission
@@ -1269,115 +1115,6 @@ function cancelImage(imageId, fileInputId) {
   });
 </script>
 
-
   </body>
-
   <!-- Mirrored from themesbrand.com/velzon/html/material/pages-team.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 Sep 2024 18:56:53 GMT -->
 </html>
-
-<!-- <script>
-$(document).on('click', '.edit-member', async function () {
-  const memberId = $(this).data('id'); // Get the ID of the member to edit
-
-  try {
-      // Fetch member data from the server
-      const response = await $.ajax({
-          url: `/admin/team-members/${memberId}`, // Your endpoint to fetch the specific team member
-          method: 'GET',
-      });
-
-      if (response && response.statusCode === 200) {
-          const member = response.data;
-
-          // Populate the modal fields with the member's data
-          $('#memberid-input').val(member.id);
-          $('#teammembersName').val(member.name);
-          $('#designation').val(member.title);
-          $('#selectedImage').attr('src', `/uploads/${member.imageUrl}`); // Show the existing image
-
-          // Show the modal
-          $('#addmemberModal').modal('show');
-      } else {
-          Swal.fire({
-              title: "Error!",
-              text: "Failed to fetch member data.",
-              icon: "error",
-          });
-      }
-  } catch (error) {
-      console.error('Error:', error);
-      Swal.fire({
-          title: "Error!",
-          text: "Failed to fetch member data. Please try again.",
-          icon: "error",
-      });
-  }
-});
-
-$('#addNewMember').on('click', async function (e) {
-  e.preventDefault();
-
-  const memberId = $('#memberid-input').val(); // Check if it's an update
-  const formData = new FormData($('#memberlist-form')[0]);
-
-  try {
-      // Confirm before proceeding
-      const result = await Swal.fire({
-          title: 'Are you sure?',
-          text: "Do you want to save the changes?",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Yes, save it!',
-          cancelButtonText: 'No, cancel!',
-      });
-
-      if (result.isConfirmed) {
-          const url = memberId ? `/admin/update/${memberId}` : '/admin/create';
-          const method = memberId ? 'PUT' : 'POST';
-
-          const response = await $.ajax({
-              url: url,
-              method: method,
-              data: formData,
-              processData: false,
-              contentType: false,
-          });
-
-          if (response && response.statusCode === (memberId ? 200 : 201)) {
-              $('#addmemberModal').modal('hide'); // Hide the modal
-              Swal.fire({
-                  title: "Success!",
-                  text: response.message,
-                  icon: "success",
-              });
-
-              // Fetch team members again
-              await fetchTeamMembers();
-          } else {
-              Swal.fire({
-                  title: "Error!",
-                  text: response.message,
-                  icon: "error",
-              });
-          }
-      }
-  } catch (error) {
-      console.error('Error:', error);
-      Swal.fire({
-          title: "Error!",
-          text: "Failed to save changes. Please try again.",
-          icon: "error",
-      });
-  }
-});
-
-async function fetchTeamMembers() {
-  try {
-      const response = await $.get('/admin/members');
-      // Populate the team members list dynamically
-      $('#team-members-container').html(response);
-  } catch (error) {
-      console.error('Error fetching team members:', error);
-  }
-}
-</script> -->

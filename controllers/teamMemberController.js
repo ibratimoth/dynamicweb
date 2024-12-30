@@ -109,9 +109,10 @@ class TeamMemberController {
             const updatedData = { ...req.body };
 
             if (req.file) {
-                updatedData.imageUrl = `/uploads/${req.file.filename}`;
+                updatedData.imageUrl = req.file ? req.file.filename : null;
             }
 
+            console.log('updatedData: ', updatedData);
             const validation = this.validatorHelper.validateNameTitleAndImage(updatedData);
             if (!validation.valid) {
                 return this.responseHandler.sendResponse(
