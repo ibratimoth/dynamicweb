@@ -22,7 +22,9 @@
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     <!-- Responsive Style -->
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-
+    <!-- about us style -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 </head>
 
 <body>
@@ -136,26 +138,6 @@
     </header>
     <!-- Header Area wrapper End -->
 
-    <!-- Coundown Section Start -->
-    <section class="countdown-timer section-padding">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="heading-count">
-                        <h2 class="wow fadeInDown" data-wow-delay="0.2s">Event Will Start In</h2>
-                    </div>
-                </div>
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="row time-countdown justify-content-center wow fadeInUp" data-wow-delay="0.2s">
-                        <div id="clock" class="time-count"></div>
-                    </div>
-                    <a href="pricing.html" class="btn btn-common wow fadeInUp" data-wow-delay="0.3s">Add to My Calender</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Coundown Section End -->
-
     <!-- Services Section Start -->
     <section id="services" class="services section-padding">
         <div class="container">
@@ -245,8 +227,59 @@
     </section>
     <!-- Services Section End -->
 
+<!-- About 1 - Bootstrap Brain Component -->
+<section class="py-3 py-md-5">
+    <div class="container">
+      <div class="row gy-3 gy-md-4 gy-lg-0 align-items-lg-center">
+        <div class="col-12 col-lg-6 col-xl-5" data-aos="fade-up">
+          <img class="img-fluid rounded" loading="lazy" src="/assets/img/about/img2.jpg" alt="About 1">
+        </div>
+        <div class="col-12 col-lg-6 col-xl-7" data-aos="fade-left">
+          <div class="row justify-content-xl-center">
+            <div class="col-12 col-xl-11">
+              <h2 class="mb-3">Who Are We?</h2>
+              <p class="lead fs-4 text-secondary mb-3" data-aos="fade-up" data-aos-delay="100">
+                We help people to build incredible brands and superior products. Our perspective is to furnish outstanding captivating services.
+              </p>
+              <p class="mb-5" data-aos="fade-up" data-aos-delay="200">
+                We are a fast-growing company, but we have never lost sight of our core values. We believe in collaboration, innovation, and customer satisfaction. We are always looking for new ways to improve our products and services.
+              </p>
+              <div class="row gy-4 gy-md-0 gx-xxl-5X">
+                <div class="col-12 col-md-6" data-aos="fade-right" data-aos-delay="300">
+                  <div class="d-flex">
+                    <div class="me-4 text-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h2 class="h4 mb-3">Versatile Brand</h2>
+                      <p class="text-secondary mb-0">We are crafting a digital method that subsists life across all mediums.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6" data-aos="fade-left" data-aos-delay="400">
+                  <div class="d-flex">
+                    <div class="me-4 text-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
+                        <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h2 class="h4 mb-3">Digital Agency</h2>
+                      <p class="text-secondary mb-0">We believe in innovation by merging primary with elaborate ideas.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+ <!-- About Section Start -->
 
-    <!-- About Section Start -->
     <section id="about" class="section-padding">
         <div class="container">
             <div class="row">
@@ -1065,170 +1098,7 @@
         </div>
     </section>
     <!-- Ask Question Section End -->
-
-    <!-- Sponsors Section Start -->
-    <!-- <section id="sponsors" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title-header text-center">
-                        <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">Sponsors</h1>
-                        <p class="wow fadeInDown" data-wow-delay="0.2s">Global Grand Event on Digital Design</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-30 text-center wow fadeInDown" data-wow-delay="0.3s">
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <div class="spnsors-logo">
-                        <a href="#"><img class="img-fluid" src="assets/img/sponsors/logo-01.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <div class="spnsors-logo">
-                        <a href="#"><img class="img-fluid" src="assets/img/sponsors/logo-02.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <div class="spnsors-logo">
-                        <a href="#"><img class="img-fluid" src="assets/img/sponsors/logo-03.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <div class="spnsors-logo">
-                        <a href="#"><img class="img-fluid" src="assets/img/sponsors/logo-04.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-12 text-center">
-                    <a href="#" class="btn btn-common">become a sponsor</a>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- Sponsors Section End -->
-
-    <!-- Ticket Pricing Area Start -->
-    <!-- <section id="pricing" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title-header text-center">
-                        <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">Our Pricing</h1>
-                        <p class="wow fadeInDown" data-wow-delay="0.2s">Global Grand Event on Digital Design</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-sm-6 col-xa-12 mb-3">
-                    <div class="price-block-wrapper wow fadeInLeft" data-wow-delay="0.2s">
-                        <div class="icon">
-                            <i class="lni-write"></i>
-                        </div>
-                        <div class="colmun-title">
-                            <h5>Basic Pass</h5>
-                        </div>
-                        <div class="price">
-                            <h2>$29</h2>
-                            <p>452 Tickets Available</p>
-                        </div>
-                        <div class="pricing-list">
-                            <ul>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Entrance</span></li>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Coffee Break</span></li>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Lunch on all days</span></li>
-                                <li><i class="lni-close"></i><span class="text">Access to all areas</span></li>
-                                <li><i class="lni-close"></i><span class="text">Certificate</span></li>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Workshop</span></li>
-                            </ul>
-                        </div>
-                        <a href="#" class="btn btn-common">Buy Ticket</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-xa-12 mb-3">
-                    <div class="price-block-wrapper wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="icon">
-                            <i class="lni-layers"></i>
-                        </div>
-                        <div class="colmun-title">
-                            <h5>Standard Pass</h5>
-                        </div>
-                        <div class="price">
-                            <h2>$40</h2>
-                            <p>452 Tickets Available</p>
-                        </div>
-                        <div class="pricing-list">
-                            <ul>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Entrance</span></li>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Coffee Break</span></li>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Lunch on all days</span></li>
-                                <li><i class="lni-close"></i><span class="text">Access to all areas</span></li>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Certificate</span></li>
-                                <li><i class="lni-close"></i><span class="text">Workshop</span></li>
-                            </ul>
-                        </div>
-                        <a href="#" class="btn btn-common">Buy Ticket</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-xa-12 mb-3">
-                    <div class="price-block-wrapper wow fadeInRight" data-wow-delay="0.4s">
-                        <div class="icon">
-                            <i class="lni-leaf"></i>
-                        </div>
-                        <div class="colmun-title">
-                            <h5>Premium Pass</h5>
-                        </div>
-                        <div class="price">
-                            <h2>$68</h2>
-                            <p>452 Tickets Available</p>
-                        </div>
-                        <div class="pricing-list">
-                            <ul>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Entrance</span></li>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Coffee Break</span></li>
-                                <li><i class="lni-close"></i><span class="text">Lunch on all days</span></li>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Access to all areas</span></li>
-                                <li><i class="lni-check-mark-circle"></i><span class="text">Certificate</span></li>
-                                <li><i class="lni-close"></i><span class="text">Workshop</span></li>
-                            </ul>
-                        </div>
-                        <a href="#" class="btn btn-common">Buy Ticket</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- Ticket Pricing Area End -->
-
-    <!-- Event Slides Section Start -->
-    <section id="event-slides" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title-header text-center">
-                        <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">Event Guideline</h1>
-                        <p class="wow fadeInDown" data-wow-delay="0.2s">Global Grand Event on Digital Design</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xs-12 wow fadeInRight" data-wow-delay="0.3s">
-                    <div class="video">
-                        <img class="img-fluid" src="assets/img/about/about.jpg" alt="">
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xs-12 wow fadeInLeft" data-wow-delay="0.3s">
-                    <p class="intro-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
-                    </p>
-                    <h2 class="intro-title">Check List</h2>
-                    <ul class="list-specification">
-                        <li><i class="lni-check-mark-circle"></i> Lorem Ipsum is simply dummy</li>
-                        <li><i class="lni-check-mark-circle"></i> Ipsum passages, and more recently</li>
-                        <li><i class="lni-check-mark-circle"></i> PageMaker including versions</li>
-                        <li><i class="lni-check-mark-circle"></i> Lorem Ipsum is simply dummy</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Event Slides Section End -->
-
+    
     <!-- Blog Section Start -->
     <section id="blog" class="section-padding">
         <div class="container">
@@ -1309,38 +1179,6 @@
         </div>
     </section>
     <!-- Blog Section End -->
-
-    <!-- Subscribe Area Start -->
-    <!-- <div id="subscribe" class="section-padding">
-        <div class="container">
-            <div class="row justify-content-md-center">
-                <div class="col-md-10 col-lg-7">
-                    <div class="subscribe-inner wow fadeInDown" data-wow-delay="0.3s">
-                        <h2 class="subscribe-title">Sign Up For Our Newsletter</h2>
-                        <form class="text-center form-inline">
-                            <input class="mb-20 form-control" name="email" placeholder="Enter Your Email Here">
-                            <button type="submit" class="btn btn-common sub-btn" data-style="zoom-in" data-spinner-size="30" name="submit" id="submit">
-                                <span class="ladda-label"><i class="lni-check-box"></i> Submit</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Subscribe Area End -->
-
-    <!-- Map Section Start -->
-    <!-- <section id="google-map-area">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <object style="border:0; height: 450px; width: 100%;" data="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3102.7887109309127!2d-77.44196278417968!3d38.95165507956235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDU3JzA2LjAiTiA3N8KwMjYnMjMuMiJX!5e0!3m2!1sen!2sbd!4v1545420879707"></object>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- Map Section End -->
 
     <!-- Contact Us Section -->
     <section id="contact-map" class="section-padding">
@@ -1499,6 +1337,12 @@
             <div class="sk-circle12 sk-child"></div>
         </div>
     </div>
+
+    <!-- AOS JavaScript -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="assets/js/jquery-min.js"></script>
