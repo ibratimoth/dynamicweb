@@ -154,10 +154,10 @@ class ValidatorHelper {
         return { valid: true };
     }
     
-    validateNameSloganAndImage({ name, title, imageUrl, imageSize }) {
+    validateNameSloganAndImage({ name, slogan, imageUrl, imageSize }) {
         // Validate name and title
-        if (!name || !title) {
-            return { valid: false, message: "Name and title must not be empty" };
+        if (!name || !slogan) {
+            return { valid: false, message: "Name and slogan must not be empty" };
         }
     
         // Validate imageUrl

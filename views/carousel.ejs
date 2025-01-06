@@ -301,10 +301,23 @@
                         
                                     <div class="mb-4">
                                         <label for="designation" class="form-label">Slogan</label>
-                                        <input type="text" class="form-control" id="designation" placeholder="Enter title" name="title" required>
+                                        <input type="text" class="form-control" id="designation" placeholder="Enter slogan" name="slogan" required>
                                         <div class="invalid-feedback">Please Enter a Slogan.</div>
                                     </div>
                         
+                                    <!-- CKEditor Text Area -->
+                                    <div class="mb-4">
+                                      <label for="description" class="form-label">Detailed Description</label>
+                                      <textarea
+                                        class="form-control"
+                                        id="editor"
+                                        name="description"
+                                        placeholder="Enter detailed description here"
+                                        rows="5"
+                                        required
+                                      ></textarea>
+                                      <div class="invalid-feedback">Please provide a detailed description.</div>
+                                    </div>
                                     <input type="hidden" id="project-input" class="form-control" value="">
                                     <input type="hidden" id="task-input" class="form-control" value="">
                         
@@ -684,6 +697,15 @@
     <!-- team init js -->
     <script src="/js/pages/team.init.js"></script>
 
+    <!-- Include CKEditor -->
+    <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
+    <script>
+      // Initialize CKEditor on the textarea
+      CKEDITOR.replace("editor", {
+        height: 200,
+      });
+    </script>
+
     <!-- dropzone min -->
     <script src="/libs/dropzone/dropzone-min.js"></script>
     <!-- filepond js -->
@@ -747,6 +769,378 @@ function cancelImage(imageId, fileInputId) {
     fileInput.value = '';
 }
 
+</script>
+
+<script>
+  $(document).ready(function () {
+      // Function to fetch all team members
+      async function fetchCarousel() {
+          try {
+              // Show spinner
+              const spinner = `
+                  <div id="team-members-spinner" class="spinner-container">
+                    <div class="d-flex justify-content-center align-items-center vh-70">
+                        <div class="spinner-grow" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>`;
+              $('body').append(spinner); // Append the spinner to the body to avoid conflicts
+
+              const response = await $.ajax({
+                  url: '/admin/carousels',
+                  method: 'GET',
+                  cache: false, // Disable caching
+              });
+
+              // Remove spinner after data is loaded
+              $('#team-members-spinner').remove();
+
+              // Check if response is successful
+              if (response && response.statusCode === 200) {
+                  const teamMembers = response.data;
+
+                  // Clear existing cards
+                  $('#team-members-container').empty();
+
+                  if (teamMembers.length === 0) {
+                      
+                    // Append the success alert when no team members are found
+                    const successAlert = `
+                          <div class="alert alert-success alert-dismissible alert-label-icon rounded-label shadow fade show" role="alert">
+                              <i class="ri-notification-off-line label-icon"></i>
+                              <strong>No team members found</strong> - Carousels have not been created yet.
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>`;
+                      $('#team-members-container').append(successAlert);
+                  } else {
+                      // Populate UI with team members
+                      teamMembers.forEach(member => {
+                        const card = `
+                            <div class="col-xl-4 col-lg-6 col-md-6 mb-4" data-member-id="${member.id}">
+                                <div class="card h-100 shadow-sm">
+                                  <!-- Card Image -->
+                                  <img
+                                    class="card-img-top img-fluid"
+                                    src="/uploads/${member.imageUrl}"
+                                    alt="Team member image"
+                                    style="object-fit: cover; height: 200px;"
+                                  />
+                                  <!-- Card Body -->
+                                  <div class="card-body text-center">
+                                    <h5 class="card-title mb-1">${member.name}</h5>
+                                    <p class="card-text text-muted mb-2">${member.slogan}</p>
+                                    <p class="card-text">
+                                      <small class="text-muted">Last updated 45 mins ago</small>
+                                    </p>
+                                  </div>
+                                  <!-- Card Footer -->
+                                  <div class="card-footer bg-white text-center">
+                                    <ul class="list-inline mb-0">
+                                      <li class="list-inline-item">
+                                        <!-- Edit Icon -->
+                                        <a
+                                          href="javascript:void(0);"
+                                          class="btn btn-outline-success btn-sm edit-member"
+                                          data-id="${member.id}"
+                                        >
+                                          <i class="ri-edit-2-line"></i>
+                                        </a>
+                                      </li>
+                                      <li class="list-inline-item">
+                                        <!-- Delete Icon -->
+                                        <a
+                                          href="javascript:void(0);"
+                                          class="btn btn-outline-danger btn-sm delete-member"
+                                        >
+                                          <i class="ri-delete-bin-line"></i>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              `;
+                        $('#team-members-container').append(card);
+                      });
+                  }
+              } else {
+                  Swal.fire({
+                      title: "Error!",
+                      text: response.message,
+                      icon: "error",
+                  });
+              }
+          } catch (error) {
+              console.error('Error:', error);
+
+              // Handle errors specifically
+              Swal.fire({
+                  title: "Error!",
+                  text: "Failed to fetch carousels. Please check your connection and try again.",
+                  icon: "error",
+              });
+
+              // Remove spinner
+              $('#team-members-spinner').remove();
+          }
+      }
+
+       // Function to delete a Carousel
+       async function deleteCarousel(memberId) {
+          try {
+              const response = await $.ajax({
+                  url: `/admin/deletec/${memberId}`,
+                  method: 'DELETE',
+              });
+
+              if (response && response.statusCode === 200) {
+                  Swal.fire({
+                      title: "Deleted!",
+                      text: response.message,
+                      icon: "success",
+                      timer: 2000,
+                  });
+
+                  // Remove the member card from the DOM
+                  $(`div[data-member-id="${memberId}"]`).remove();
+              } else {
+                  Swal.fire({
+                      title: "Error!",
+                      text: response.message || "Failed to delete the carousel.",
+                      icon: "error",
+                  });
+              }
+          } catch (error) {
+              console.error('Error:', error);
+              Swal.fire({
+                  title: "Error!",
+                  text: "Failed to delete the member. Please try again later.",
+                  icon: "error",
+              });
+          }
+      }
+
+      // Attach event listener for delete icons
+      $('#team-members-container').on('click', '.delete-member', function () {
+          const memberId = $(this).closest('div[data-member-id]').data('member-id');
+
+          Swal.fire({
+              title: "Are you sure?",
+              text: "You won't be able to revert this!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#d33",
+              cancelButtonColor: "#3085d6",
+              confirmButtonText: "Yes, delete it!",
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  deleteCarousel(memberId);
+              }
+          });
+      });
+
+      $(document).on('click', '.edit-member', async function () {
+        const memberId = $(this).data('id'); // Get the ID of the member to edit
+
+        try {
+            // Fetch member data from the server
+            const response = await $.ajax({
+                url: `/admin/carousel/${memberId}`, // Your endpoint to fetch the specific team member
+                method: 'GET',
+            });
+
+            if (response && response.statusCode === 200) {
+                const member = response.data;
+
+                // Populate the modal fields with the member's data
+                $('#memberid-input').val(member.id);
+                $('#teammembersName').val(member.name);
+                $('#designation').val(member.slogan);
+                $('#selectedImage').attr('src', `/uploads/${member.imageUrl}`); // Show the existing image
+
+                // Show the modal
+                $('#addmemberModal').modal('show');
+                $('#updateMember').show(); // Show Update button
+                $('#addNewMember').hide(); // Show Update button
+                // $('#updateMember')
+                // .text('Update Member') // Set button to "Update Member"
+                // .data('action', 'update'); // Pass update action type
+            } else {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Failed to fetch carousel data.",
+                    icon: "error",
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: "Error!",
+                text: "Failed to fetch carousels data. Please try again.",
+                icon: "error",
+            });
+        }
+      });
+
+      $('#updateMember').on('click', async function (e) {
+        e.preventDefault();
+
+        const memberId = $('#memberid-input').val(); // Check if it's an update
+        const formData = new FormData($('#memberlist-form')[0]);
+        var fileInput = document.querySelector("#customFile1");
+        var file = fileInput.files[0];
+        console.log("file:", file);
+        console.log("memberId:", memberId);
+        formData.append('imageUrl', file);
+
+        // Log FormData to see the files and other fields
+        console.log([...formData.entries()]);
+
+        try {
+            // Confirm before proceeding
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to save the changes?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, save it!',
+                cancelButtonText: 'No, cancel!',
+            });
+
+            if (result.isConfirmed) {
+        //       const url = $('#addNewMember').data('action') === 'update'
+        //     ? `/admin/update/${memberId}`
+        //     : '/admin/create';
+
+        // const method = $('#addNewMember').data('action') === 'update' ? 'PUT' : 'POST';
+
+                const response = await $.ajax({
+                    url: `/admin/updatec/${memberId}`,
+                    method: 'PUT',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                });
+
+                if (response && response.statusCode === (memberId ? 200 : 201)) {
+                    $('#addmemberModal').modal('hide'); // Hide the modal
+                    $('#updateMember').hide(); // hide Update button
+                    $('#addNewMember').show(); // Show add button
+                    Swal.fire({
+                        title: "Success!",
+                        text: response.message,
+                        icon: "success",
+                        timer: 2000,
+                    });
+
+                    // Fetch team members again
+                    await fetchCarousel();
+                } else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: response.message,
+                        icon: "error",
+                        timer: 2000,
+                    });
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: "Error!",
+                text: "Failed to save changes. Please try again.",
+                icon: "error",
+            });
+        }
+      });
+
+      $('#mine').on('click', async function (e) {
+        e.preventDefault();
+        console.log('imefika');
+        $('#updateMember').hide(); // hide Update button
+        $('#addNewMember').show(); // Show add button
+      });
+
+      // Handle form submission
+      $('#addNewMember').on('click', async function (e) {
+          e.preventDefault();
+
+          // Create FormData object to handle multiple files and other inputs
+          const formData = new FormData($('#memberlist-form')[0]);
+          var fileInput = document.querySelector("#customFile1");
+          var file = fileInput.files[0];
+          console.log("file:", file);
+          formData.append('imageUrl', file);
+
+          // Log FormData to see the files and other fields
+          console.log([...formData.entries()]);
+
+          try {
+              // AJAX request using async/await
+              const response = await $.ajax({
+                  url: '/admin/createc',
+                  method: 'POST',
+                  data: formData,
+                  processData: false, // Prevent jQuery from automatically processing data
+                  contentType: false, // Use FormData's default content type
+                  cache: false, // Prevent caching
+              });
+
+              // Handle different status codes
+              if (response && response.statusCode === 201) {
+
+                // Reset form fields
+                $('#memberlist-form')[0].reset();
+                $('#customFile1').val('');  // Clear the image input field
+                 // Hide the modal
+                 $('#addmemberModal').modal('hide');
+
+                  Swal.fire({
+                      title: "Good job!",
+                      text: response.message,
+                      icon: "success",
+                      timer: 2000, // Close after 2000 milliseconds
+                  });
+
+                  // Fetch team members again after success
+                  await fetchCarousel();
+              } else if (response && response.statusCode === 400) {
+                  Swal.fire({
+                      title: "Error!",
+                      text: response.message,
+                      icon: "error",
+                  });
+              } else {
+                  Swal.fire({
+                      title: "Unexpected Status!",
+                      text: "Something went wrong. Please try again later.",
+                      icon: "warning",
+                  });
+              }
+          } catch (error) {
+              console.error('Error:', error);
+
+              // Handle errors specifically using the responseJSON
+              if (error.status === 400 && error.responseJSON) {
+                  Swal.fire({
+                      title: "Error!",
+                      text: error.responseJSON.message || "Client-side error occurred.",
+                      icon: "error",
+                  });
+              } else {
+                  Swal.fire({
+                      title: "Error!",
+                      text: "Failed to submit the form. Please check your connection and try again.",
+                      icon: "error",
+                  });
+              }
+          }
+      });
+
+      // Initial fetch
+      setTimeout(fetchCarousel, 1000);
+  });
 </script>
 
   </body>

@@ -45,10 +45,10 @@ router.get('/carousel/:id', CarouselController.getCarouselById.bind(CarouselCont
 router.put('/updatec/:id', upload, CarouselController.updateCarousel.bind(CarouselController));
 
 //delete route
-router.delete('/delete/:id', CarouselController.deleteCarousel.bind(CarouselController));
+router.delete('/deletec/:id', CarouselController.deleteCarousel.bind(CarouselController));
 
 // Route to delete all carousel
-router.delete('/delete-all', CarouselController.deleteAllcarousels.bind(CarouselController));
+router.delete('/delete-allc', CarouselController.deleteAllcarousels.bind(CarouselController));
 
 router.get('/', (req, res) => {
     res.render('auth-signin-cover');

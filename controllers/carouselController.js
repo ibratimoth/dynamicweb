@@ -28,10 +28,10 @@ class CarouselController {
                 );
             }
 
-            if (imageUrl) {
-                const resizedImageName = await this.imageProcessor.processImage(path.join(__dirname, '../public/uploads/', imageUrl));
-                imageUrl = resizedImageName; // Store only the filename
-            }
+            // if (imageUrl) {
+            //     const resizedImageName = await this.imageProcessor.processImage(path.join(__dirname, '../public/uploads/', imageUrl));
+            //     imageUrl = resizedImageName; // Store only the filename
+            // }
 
             const newCarousel = await this.carouselService.createCarousel({
                 name,

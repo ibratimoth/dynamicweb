@@ -807,32 +807,49 @@ function cancelImage(imageId, fileInputId) {
                       // Populate UI with team members
                       teamMembers.forEach(member => {
                         const card = `
-                            <div class="col-xl-4" data-member-id="${member.id}">
-                              <div class="card">
-                                  <div class="card-header">
-                                      <button type="button" class="btn-close float-end fs-11" aria-label="Close"></button>
+                             <div class="col-xl-4 col-lg-6 col-md-6 mb-4" data-member-id="${member.id}">
+                                <div class="card h-100 shadow-sm">
+                                  <!-- Card Image -->
+                                  <img
+                                    class="card-img-top img-fluid"
+                                    src="/uploads/${member.imageUrl}"
+                                    alt="Team member image"
+                                    style="object-fit: cover; height: 200px;"
+                                  />
+                                  <!-- Card Body -->
+                                  <div class="card-body text-center">
+                                    <h5 class="card-title mb-1">${member.name}</h5>
+                                    <p class="card-text text-muted mb-2">${member.title}</p>
+                                    <p class="card-text">
+                                      <small class="text-muted">Last updated 45 mins ago</small>
+                                    </p>
                                   </div>
-                                  <div class="card-body p-4 text-center">
-                                      <div class="mx-auto avatar-md mb-3">
-                                          <img src="/uploads/${member.imageUrl}" alt="team member" class="img-fluid rounded-circle">
-                                      </div>
-                                      <h5 class="card-title mb-1">${member.name}</h5>
-                                      <p class="text-muted mb-0">${member.title}</p>
+                                  <!-- Card Footer -->
+                                  <div class="card-footer bg-white text-center">
+                                    <ul class="list-inline mb-0">
+                                      <li class="list-inline-item">
+                                        <!-- Edit Icon -->
+                                        <a
+                                          href="javascript:void(0);"
+                                          class="btn btn-outline-success btn-sm edit-member"
+                                          data-id="${member.id}"
+                                        >
+                                          <i class="ri-edit-2-line"></i>
+                                        </a>
+                                      </li>
+                                      <li class="list-inline-item">
+                                        <!-- Delete Icon -->
+                                        <a
+                                          href="javascript:void(0);"
+                                          class="btn btn-outline-danger btn-sm delete-member"
+                                        >
+                                          <i class="ri-delete-bin-line"></i>
+                                        </a>
+                                      </li>
+                                    </ul>
                                   </div>
-                                  <div class="card-footer text-center">
-                                      <ul class="list-inline mb-0">
-                                        <li class="list-inline-item">
-                                            <!-- Edit Icon -->
-                                            <a href="javascript:void(0);" class="lh-1 align-middle link-success edit-member" data-id="${member.id}"><i class="ri-edit-2-line"></i></a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <!-- Delete Icon -->
-                                            <a href="javascript:void(0);" class="lh-1 align-middle link-danger delete-member"><i class="ri-delete-bin-line"></i></a>
-                                        </li>
-                                      </ul>
-                                  </div>
-                              </div>
-                            </div><!-- end col -->`;
+                                </div>
+                              </div>`;
                         $('#team-members-container').append(card);
                       });
                   }
