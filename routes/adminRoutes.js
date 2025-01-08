@@ -2,10 +2,12 @@ const express = require("express");
 const authController = require('../controllers/authController');
 const teamController = require('../controllers/teamMemberController');
 const carouselController = require('../controllers/carouselController');
+const eventController = require('../controllers/eventController');
 const upload = require('../Middlewares/uploadMiddleware');
 const TeamController = new teamController();
 const AuthController = new authController();
 const CarouselController = new carouselController();
+const EventController = new eventController();
 const router = express.Router();
 
 // Registration route
@@ -50,6 +52,24 @@ router.delete('/deletec/:id', CarouselController.deleteCarousel.bind(CarouselCon
 // Route to delete all carousel
 router.delete('/delete-allc', CarouselController.deleteAllcarousels.bind(CarouselController));
 
+//create route
+router.post('/createv', upload, EventController.createEvent.bind(EventController));
+
+// Get all Event route
+router.get('/events', EventController.getAllEvents.bind(EventController));
+
+// Get Event by ID route
+router.get('/event/:id', EventController.getEventById.bind(EventController));
+
+//update route
+router.put('/updatev/:id', upload, EventController.updateEvent.bind(EventController));
+
+//delete route
+router.delete('/deletev/:id', EventController.deleteEvent.bind(EventController));
+
+// Route to delete all Event
+router.delete('/delete-allv', EventController.deleteAllEvents.bind(EventController));
+
 router.get('/', (req, res) => {
     res.render('auth-signin-cover');
 });
@@ -64,6 +84,10 @@ router.get('/team', (req, res) => {
 
 router.get('/caro', (req, res) => {
     res.render('carousel');
+});
+
+router.get('/event', (req, res) => {
+    res.render('event');
 });
 
 module.exports = router;

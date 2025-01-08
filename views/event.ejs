@@ -146,7 +146,7 @@
                         type="text"
                         class="form-control"
                         id="searchMemberList"
-                        placeholder="Search for event name or slogan..."
+                        placeholder="Search for event name..."
                       />
                       <i class="ri-search-line search-icon"></i>
                     </div>
@@ -195,7 +195,7 @@
                         id="mine"
                       >
                         <i class="ri-add-fill me-1 align-bottom"></i> Add
-                        Carousel
+                        Event
                       </button>
                     </div>
                   </div>
@@ -257,7 +257,7 @@
                                             <img src="/images/small/img-9.jpg" alt="" id="cover-img" class="img-fluid">
                                             <div class="d-flex position-absolute start-0 end-0 top-0 p-3">
                                                 <div class="flex-grow-1">
-                                                    <h5 class="modal-title text-white" id="createMemberLabel">Add New Carousel</h5>
+                                                    <h5 class="modal-title text-white" id="createMemberLabel">Add New Event</h5>
                                                 </div>
                                                 <div class="flex-shrink-0">
                                                     <div class="d-flex gap-3 align-items-center">
@@ -294,15 +294,9 @@
                                     </div>
                         
                                     <div class="mb-3">
-                                        <label for="teammembersName" class="form-label">Event Name</label>
-                                        <input type="text" class="form-control" id="teammembersName" placeholder="Enter name" name="name" required>
-                                        <div class="invalid-feedback">Please Enter a name.</div>
-                                    </div>
-                        
-                                    <div class="mb-4">
-                                        <label for="designation" class="form-label">Slogan</label>
-                                        <input type="text" class="form-control" id="designation" placeholder="Enter slogan" name="slogan" required>
-                                        <div class="invalid-feedback">Please Enter a Slogan.</div>
+                                        <label for="teammembersName" class="form-label">Event title</label>
+                                        <input type="text" class="form-control" id="teammembersName" placeholder="Enter event title" name="title" required>
+                                        <div class="invalid-feedback">Please Enter an event name.</div>
                                     </div>
                         
                                     <!-- CKEditor Text Area -->
@@ -311,7 +305,8 @@
                                       <textarea
                                         class="form-control"
                                         id="editor"
-                                        name="description"
+                                        class="editor"
+                                        name="about"
                                         placeholder="Enter detailed description here"
                                         rows="5"
                                         required
@@ -323,8 +318,8 @@
                         
                                     <div class="hstack gap-2 justify-content-end">
                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-success" id="addNewMember">Add Carousel</button>
-                                        <button type="button" class="btn btn-success" id="updateMember" style="display: none;">update Carousel</button>
+                                        <button type="button" class="btn btn-success" id="addNewMember">Add Event</button>
+                                        <button type="button" class="btn btn-success" id="updateMember" style="display: none;">update Event</button>
                                     </div>
                                 </div>
                             </div>
@@ -774,7 +769,7 @@ function cancelImage(imageId, fileInputId) {
 <script>
   $(document).ready(function () {
       // Function to fetch all team members
-      async function fetchCarousel() {
+      async function fetchEvent() {
           try {
               // Show spinner
               const spinner = `
@@ -788,7 +783,7 @@ function cancelImage(imageId, fileInputId) {
               $('body').append(spinner); // Append the spinner to the body to avoid conflicts
 
               const response = await $.ajax({
-                  url: '/admin/carousels',
+                  url: '/admin/events',
                   method: 'GET',
                   cache: false, // Disable caching
               });
@@ -809,7 +804,7 @@ function cancelImage(imageId, fileInputId) {
                     const successAlert = `
                           <div class="alert alert-success alert-dismissible alert-label-icon rounded-label shadow fade show" role="alert">
                               <i class="ri-notification-off-line label-icon"></i>
-                              <strong>No carousel found</strong> - Carousels have not been created yet.
+                              <strong>No event found</strong> - Events have not been created yet.
                               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                           </div>`;
                       $('#team-members-container').append(successAlert);
@@ -828,8 +823,8 @@ function cancelImage(imageId, fileInputId) {
                                   />
                                   <!-- Card Body -->
                                   <div class="card-body text-center">
-                                    <h5 class="card-title mb-1">${member.name}</h5>
-                                    <p class="card-text text-muted mb-2">${member.slogan}</p>
+                                    <h5 class="card-title mb-1">${member.title}</h5>
+                                    <p class="card-text text-muted mb-2">${member.about}</p>
                                     <p class="card-text">
                                       <small class="text-muted">Last updated 45 mins ago</small>
                                     </p>
@@ -877,7 +872,7 @@ function cancelImage(imageId, fileInputId) {
               // Handle errors specifically
               Swal.fire({
                   title: "Error!",
-                  text: "Failed to fetch carousels. Please check your connection and try again.",
+                  text: "Failed to fetch Events. Please check your connection and try again.",
                   icon: "error",
               });
 
@@ -886,11 +881,11 @@ function cancelImage(imageId, fileInputId) {
           }
       }
 
-       // Function to delete a Carousel
-       async function deleteCarousel(memberId) {
+       // Function to delete a Event
+       async function deleteEvent(memberId) {
           try {
               const response = await $.ajax({
-                  url: `/admin/deletec/${memberId}`,
+                  url: `/admin/deletev/${memberId}`,
                   method: 'DELETE',
               });
 
@@ -907,7 +902,7 @@ function cancelImage(imageId, fileInputId) {
               } else {
                   Swal.fire({
                       title: "Error!",
-                      text: response.message || "Failed to delete the carousel.",
+                      text: response.message || "Failed to delete the Event.",
                       icon: "error",
                   });
               }
@@ -915,7 +910,7 @@ function cancelImage(imageId, fileInputId) {
               console.error('Error:', error);
               Swal.fire({
                   title: "Error!",
-                  text: "Failed to delete the member. Please try again later.",
+                  text: "Failed to delete the Event. Please try again later.",
                   icon: "error",
               });
           }
@@ -935,7 +930,7 @@ function cancelImage(imageId, fileInputId) {
               confirmButtonText: "Yes, delete it!",
           }).then((result) => {
               if (result.isConfirmed) {
-                  deleteCarousel(memberId);
+                  deleteEvent(memberId);
               }
           });
       });
@@ -946,7 +941,7 @@ function cancelImage(imageId, fileInputId) {
         try {
             // Fetch member data from the server
             const response = await $.ajax({
-                url: `/admin/carousel/${memberId}`, // Your endpoint to fetch the specific team member
+                url: `/admin/event/${memberId}`, // Your endpoint to fetch the specific team member
                 method: 'GET',
             });
 
@@ -955,8 +950,12 @@ function cancelImage(imageId, fileInputId) {
 
                 // Populate the modal fields with the member's data
                 $('#memberid-input').val(member.id);
-                $('#teammembersName').val(member.name);
-                $('#designation').val(member.slogan);
+                $('#teammembersName').val(member.title);
+                  // Populate CKEditor with the 'about' value
+                if (CKEDITOR.instances.editor) {
+                    CKEDITOR.instances.editor.setData(member.about); // Update CKEditor content
+                }
+
                 $('#selectedImage').attr('src', `/uploads/${member.imageUrl}`); // Show the existing image
 
                 // Show the modal
@@ -969,7 +968,7 @@ function cancelImage(imageId, fileInputId) {
             } else {
                 Swal.fire({
                     title: "Error!",
-                    text: "Failed to fetch carousel data.",
+                    text: "Failed to fetch Event data.",
                     icon: "error",
                 });
             }
@@ -977,82 +976,183 @@ function cancelImage(imageId, fileInputId) {
             console.error('Error:', error);
             Swal.fire({
                 title: "Error!",
-                text: "Failed to fetch carousels data. Please try again.",
+                text: "Failed to fetch Events data. Please try again.",
                 icon: "error",
             });
         }
       });
 
-      $('#updateMember').on('click', async function (e) {
-        e.preventDefault();
+      // $('#updateMember').on('click', async function (e) {
+      //   e.preventDefault();
 
-        const memberId = $('#memberid-input').val(); // Check if it's an update
-        const formData = new FormData($('#memberlist-form')[0]);
-        var fileInput = document.querySelector("#customFile1");
-        var file = fileInput.files[0];
-        console.log("file:", file);
-        console.log("memberId:", memberId);
-        formData.append('imageUrl', file);
+      //   if (CKEDITOR.instances.editor) {
+      //           CKEDITOR.instances.editor.updateElement();
+      //           const editorContent = CKEDITOR.instances.editor.getData(); // Get the full HTML content
+      //           $('#editor').val(editorContent); // Save the HTML content in the textarea
+      //       }
 
-        // Log FormData to see the files and other fields
-        console.log([...formData.entries()]);
+      //   const memberId = $('#memberid-input').val(); // Check if it's an update
+      //   const formData = new FormData($('#memberlist-form')[0]);
+      //   var fileInput = document.querySelector("#customFile1");
+      //   var file = fileInput.files[0];
+      //   console.log("file:", file);
+      //   console.log("memberId:", memberId);
+      //   formData.append('imageUrl', file);
 
-        try {
-            // Confirm before proceeding
-            const result = await Swal.fire({
-                title: 'Are you sure?',
-                text: "Do you want to save the changes?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, save it!',
-                cancelButtonText: 'No, cancel!',
-            });
+      //   // Log FormData to see the files and other fields
+      //   console.log([...formData.entries()]);
 
-            if (result.isConfirmed) {
-        //       const url = $('#addNewMember').data('action') === 'update'
-        //     ? `/admin/update/${memberId}`
-        //     : '/admin/create';
+      //   try {
+      //       // Confirm before proceeding
+      //       const result = await Swal.fire({
+      //           title: 'Are you sure?',
+      //           text: "Do you want to save the changes?",
+      //           icon: 'warning',
+      //           showCancelButton: true,
+      //           confirmButtonText: 'Yes, save it!',
+      //           cancelButtonText: 'No, cancel!',
+      //       });
 
-        // const method = $('#addNewMember').data('action') === 'update' ? 'PUT' : 'POST';
+      //       if (result.isConfirmed) {
+      //   //       const url = $('#addNewMember').data('action') === 'update'
+      //   //     ? `/admin/update/${memberId}`
+      //   //     : '/admin/create';
 
-                const response = await $.ajax({
-                    url: `/admin/updatec/${memberId}`,
-                    method: 'PUT',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                });
+      //   // const method = $('#addNewMember').data('action') === 'update' ? 'PUT' : 'POST';
 
-                if (response && response.statusCode === (memberId ? 200 : 201)) {
-                    $('#addmemberModal').modal('hide'); // Hide the modal
-                    $('#updateMember').hide(); // hide Update button
-                    $('#addNewMember').show(); // Show add button
-                    Swal.fire({
-                        title: "Success!",
-                        text: response.message,
-                        icon: "success",
-                        timer: 2000,
-                    });
+      //           const response = await $.ajax({
+      //               url: `/admin/updatev/${memberId}`,
+      //               method: 'PUT',
+      //               data: formData,
+      //               processData: false,
+      //               contentType: false,
+      //           });
 
-                    // Fetch team members again
-                    await fetchCarousel();
-                } else {
-                    Swal.fire({
-                        title: "Error!",
-                        text: response.message,
-                        icon: "error",
-                        timer: 2000,
-                    });
-                }
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            Swal.fire({
-                title: "Error!",
-                text: "Failed to save changes. Please try again.",
-                icon: "error",
-            });
-        }
+      //           if (response && response.statusCode === (memberId ? 200 : 201)) {
+      //               $('#addmemberModal').modal('hide'); // Hide the modal
+      //               $('#updateMember').hide(); // hide Update button
+      //               $('#addNewMember').show(); // Show add button
+      //               Swal.fire({
+      //                   title: "Success!",
+      //                   text: response.message,
+      //                   icon: "success",
+      //                   timer: 2000,
+      //               });
+
+      //               // Fetch team members again
+      //               await fetchEvent();
+      //           } else {
+      //               Swal.fire({
+      //                   title: "Error!",
+      //                   text: response.message,
+      //                   icon: "error",
+      //                   timer: 2000,
+      //               });
+      //           }
+      //       }
+      //   } catch (error) {
+      //       console.error('Error:', error);
+      //       Swal.fire({
+      //           title: "Error!",
+      //           text: "Failed to save changes. Please try again.",
+      //           icon: "error",
+      //       });
+      //   }
+      // });
+
+            $('#updateMember').on('click', async function (e) {
+          e.preventDefault();
+
+          if (CKEDITOR.instances.editor) {
+              CKEDITOR.instances.editor.updateElement();
+              const editorContent = CKEDITOR.instances.editor.getData(); // Get the full HTML content
+              $('#editor').val(editorContent); // Save the HTML content in the textarea
+          }
+
+          const memberId = $('#memberid-input').val(); // Get memberId for updating
+          const formData = new FormData($('#memberlist-form')[0]);
+          var fileInput = document.querySelector("#customFile1");
+          var file = fileInput.files[0];
+          console.log("file:", file);
+          console.log("memberId:", memberId);
+          formData.append('imageUrl', file);
+
+          // Log FormData to see the files and other fields
+          console.log([...formData.entries()]);
+
+          try {
+              // Confirm before proceeding
+              const result = await Swal.fire({
+                  title: 'Are you sure?',
+                  text: "Do you want to save the changes?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, save it!',
+                  cancelButtonText: 'No, cancel!',
+              });
+
+              if (result.isConfirmed) {
+                  const response = await $.ajax({
+                      url: `/admin/updatev/${memberId}`,
+                      method: 'PUT',
+                      data: formData,
+                      processData: false,
+                      contentType: false,
+                  });
+
+                  if (response && response.statusCode === (memberId ? 200 : 201)) {
+                      $('#addmemberModal').modal('hide'); // Hide the modal
+                      $('#updateMember').hide(); // Hide Update button
+                      $('#addNewMember').show(); // Show add button
+                      Swal.fire({
+                          title: "Success!",
+                          text: response.message,
+                          icon: "success",
+                          timer: 2000,
+                      });
+
+                      // Update the DOM directly
+                      const updatedMemberDiv = $(`div[data-member-id="${memberId}"]`);
+                      if (updatedMemberDiv.length) {
+
+                        // updatedMemberDiv.find('.card-body').empty(); 
+
+                        // updatedMemberDiv.find('.card-title').text(response.data.title || ''); 
+                        // updatedMemberDiv.find('.card-text.text-muted').empty().html(response.data.about || ''); 
+                        // updatedMemberDiv.find('.card-img-top').attr('src', `/uploads/${response.data.imageUrl || ''}`);
+
+                            // Clear the entire content of the card body to prevent duplication
+                              updatedMemberDiv.find('.card-body').empty();
+
+                          // Manually insert the updated title, about, and image inside the card body to match your structure
+                          updatedMemberDiv.find('.card-body').append(`
+                              <h5 class="card-title mb-1">${response.data.title || ''}</h5>
+                              <p class="card-text text-muted mb-2">${response.data.about || ''}</p>
+                              <p class="card-text">
+                                  <small class="text-muted">Last updated just now</small>
+                              </p>
+                          `);
+
+                          // Update the image URL
+                          updatedMemberDiv.find('.card-img-top').attr('src', `/uploads/${response.data.imageUrl || ''}`);
+                    }
+                  } else {
+                      Swal.fire({
+                          title: "Error!",
+                          text: response.message,
+                          icon: "error",
+                          timer: 2000,
+                      });
+                  }
+              }
+          } catch (error) {
+              console.error('Error:', error);
+              Swal.fire({
+                  title: "Error!",
+                  text: "Failed to save changes. Please try again.",
+                  icon: "error",
+              });
+          }
       });
 
       $('#mine').on('click', async function (e) {
@@ -1065,6 +1165,21 @@ function cancelImage(imageId, fileInputId) {
       // Handle form submission
       $('#addNewMember').on('click', async function (e) {
           e.preventDefault();
+
+              // Synchronize CKEditor content with the textarea
+            //   if (CKEDITOR.instances.editor) {
+            //     CKEDITOR.instances.editor.updateElement();
+            //     // Convert HTML to plain text
+            //     const editorContent = CKEDITOR.instances.editor.getData();
+            //     const plainText = editorContent.replace(/<[^>]*>?/gm, '').trim(); // Remove HTML tags and trim whitespace
+            //     $('#editor').val(plainText); // Update the textarea with plain text
+            // }
+
+            if (CKEDITOR.instances.editor) {
+                CKEDITOR.instances.editor.updateElement();
+                const editorContent = CKEDITOR.instances.editor.getData(); // Get the full HTML content
+                $('#editor').val(editorContent); // Save the HTML content in the textarea
+            }
 
           // Create FormData object to handle multiple files and other inputs
           const formData = new FormData($('#memberlist-form')[0]);
@@ -1079,7 +1194,7 @@ function cancelImage(imageId, fileInputId) {
           try {
               // AJAX request using async/await
               const response = await $.ajax({
-                  url: '/admin/createc',
+                  url: '/admin/createv',
                   method: 'POST',
                   data: formData,
                   processData: false, // Prevent jQuery from automatically processing data
@@ -1104,7 +1219,7 @@ function cancelImage(imageId, fileInputId) {
                   });
 
                   // Fetch team members again after success
-                  await fetchCarousel();
+                  await fetchEvent();
               } else if (response && response.statusCode === 400) {
                   Swal.fire({
                       title: "Error!",
@@ -1139,10 +1254,13 @@ function cancelImage(imageId, fileInputId) {
       });
 
       // Initial fetch
-      setTimeout(fetchCarousel, 1000);
+      setTimeout(fetchEvent, 1000);
   });
 </script>
 
   </body>
   <!-- Mirrored from themesbrand.com/velzon/html/material/pages-team.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 Sep 2024 18:56:53 GMT -->
 </html>
+
+
+
