@@ -3,11 +3,13 @@ const authController = require('../controllers/authController');
 const teamController = require('../controllers/teamMemberController');
 const carouselController = require('../controllers/carouselController');
 const eventController = require('../controllers/eventController');
+const scheduleController = require('../controllers/scheduleController')
 const upload = require('../Middlewares/uploadMiddleware');
 const TeamController = new teamController();
 const AuthController = new authController();
 const CarouselController = new carouselController();
 const EventController = new eventController();
+const ScheduleController = new scheduleController();;
 const router = express.Router();
 
 // Registration route
@@ -70,6 +72,24 @@ router.delete('/deletev/:id', EventController.deleteEvent.bind(EventController))
 // Route to delete all Event
 router.delete('/delete-allv', EventController.deleteAllEvents.bind(EventController));
 
+//create route
+router.post('/createc', upload, ScheduleController.createSchedule.bind(ScheduleController));
+
+// Get all Event route
+router.get('/schedules', ScheduleController.getAllSchedule.bind(ScheduleController));
+
+// Get Event by ID route
+router.get('/schedule/:id', ScheduleController.getScheduleById.bind(ScheduleController));
+
+//update route
+router.put('/updatec/:id', upload, ScheduleController.updateSchedule.bind(ScheduleController));
+
+//delete route
+router.delete('/deletec/:id', ScheduleController.deleteSchedule.bind(ScheduleController));
+
+// Route to delete all Event
+router.delete('/delete-allc', ScheduleController.deleteAllSchedule.bind(ScheduleController));
+
 router.get('/', (req, res) => {
     res.render('auth-signin-cover');
 });
@@ -89,5 +109,9 @@ router.get('/caro', (req, res) => {
 router.get('/event', (req, res) => {
     res.render('event');
 });
+
+router.get('/schedule', (req, res) => {
+    res.render('schedule');
+})
 
 module.exports = router;
