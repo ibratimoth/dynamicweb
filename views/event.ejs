@@ -1,81 +1,65 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  data-layout="vertical"
-  data-topbar="light"
-  data-sidebar="dark"
-  data-sidebar-size="lg"
-  data-sidebar-image="none"
-  data-preloader="disable"
->
-  <!-- Mirrored from themesbrand.com/velzon/html/material/pages-team.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 Sep 2024 18:56:51 GMT -->
-  <head>
-    <meta charset="utf-8" />
-    <title>Team | Velzon - Admin & Dashboard Template</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      content="Premium Multipurpose Admin & Dashboard Template"
-      name="description"
-    />
-    <meta content="Themesbrand" name="author" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="/images/favicon.ico" />
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+  data-sidebar-image="none" data-preloader="disable">
+<!-- Mirrored from themesbrand.com/velzon/html/material/pages-team.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 Sep 2024 18:56:51 GMT -->
 
-    <!-- Layout config Js -->
-    <script src="/js/layout.js"></script>
-    <!-- Bootstrap Css -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
-    <link href="/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
-    <link href="/css/app.min.css" rel="stylesheet" type="text/css" />
-    <!-- custom Css-->
-    <link href="/css/custom.min.css" rel="stylesheet" type="text/css" />
-    <!-- Filepond css -->
-    <link
-      rel="stylesheet"
-      href="/libs/filepond/filepond.min.css"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css"
-    />
-    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8" />
+  <title>Team | Velzon - Admin & Dashboard Template</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+  <meta content="Themesbrand" name="author" />
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="/images/favicon.ico" />
 
-  </head>
+  <!-- Layout config Js -->
+  <script src="/js/layout.js"></script>
+  <!-- Bootstrap Css -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <!-- Icons Css -->
+  <link href="/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <!-- App Css-->
+  <link href="/css/app.min.css" rel="stylesheet" type="text/css" />
+  <!-- custom Css-->
+  <link href="/css/custom.min.css" rel="stylesheet" type="text/css" />
+  <!-- Filepond css -->
+  <link rel="stylesheet" href="/libs/filepond/filepond.min.css" type="text/css" />
+  <link rel="stylesheet" href="/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css" />
+  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+  <style>
+    .spinner-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Ensures it's above other content */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(21, 21, 41, 0.5); /* Optional: background shade */
+}
+  </style>
+</head>
 
-  <body>
-    <!-- Begin page -->
-    <div id="layout-wrapper">
-      <%-include('header.ejs')-%>
+<body>
+  <!-- Begin page -->
+  <div id="layout-wrapper">
+    <%-include('header.ejs')-%>
 
       <!-- removeNotificationModal -->
-      <div
-        id="removeNotificationModal"
-        class="modal fade zoomIn"
-        tabindex="-1"
-        aria-hidden="true"
-      >
+      <div id="removeNotificationModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                id="NotificationModalbtn-close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                id="NotificationModalbtn-close"></button>
             </div>
             <div class="modal-body">
               <div class="mt-2 text-center">
-                <lord-icon
-                  src="https://cdn.lordicon.com/gsqxdxog.json"
-                  trigger="loop"
-                  colors="primary:#f7b84b,secondary:#f06548"
-                  style="width: 100px; height: 100px"
-                ></lord-icon>
+                <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
+                  colors="primary:#f7b84b,secondary:#f06548" style="width: 100px; height: 100px"></lord-icon>
                 <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
                   <h4>Are you sure ?</h4>
                   <p class="text-muted mx-4 mb-0">
@@ -84,18 +68,10 @@
                 </div>
               </div>
               <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                <button
-                  type="button"
-                  class="btn w-sm btn-light"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button
-                  type="button"
-                  class="btn w-sm btn-danger"
-                  id="delete-notification"
-                >
+                <button type="button" class="btn w-sm btn-danger" id="delete-notification">
                   Yes, Delete It!
                 </button>
               </div>
@@ -107,578 +83,451 @@
       </div>
       <!-- /.modal -->
       <%-include('sidebar.ejs')-%>
-      <!-- Vertical Overlay-->
-      <div class="vertical-overlay"></div>
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
 
-      <!-- ============================================================== -->
-      <!-- Start right Content here -->
-      <!-- ============================================================== -->
-      <div class="main-content">
-        <div class="page-content">
-          <div class="container-fluid">
-            <!-- start page title -->
-            <div class="row">
-              <div class="col-12">
-                <div
-                  class="page-title-box d-sm-flex align-items-center justify-content-between"
-                >
-                  <h4 class="mb-sm-0">Team</h4>
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+          <div class="page-content">
+            <div class="container-fluid">
+              <!-- start page title -->
+              <div class="row">
+                <div class="col-12">
+                  <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Team</h4>
 
-                  <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                      <li class="breadcrumb-item">
-                        <a href="javascript: void(0);">Pages</a>
-                      </li>
-                      <li class="breadcrumb-item active">Team</li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- end page title -->
-
-            <div class="card">
-              <div class="card-body">
-                <div class="row g-2">
-                  <div class="col-sm-4">
-                    <div class="search-box">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="searchMemberList"
-                        placeholder="Search for event name..."
-                      />
-                      <i class="ri-search-line search-icon"></i>
-                    </div>
-                  </div>
-                  <!--end col-->
-                  <div class="col-sm-auto ms-auto">
-                    <div class="list-grid-nav hstack gap-1">
-                      <button
-                        type="button"
-                        id="grid-view-button"
-                        class="btn btn-soft-info nav-link btn-icon fs-14 active filter-button shadow-none"
-                      >
-                        <i class="ri-grid-fill"></i>
-                      </button>
-                      <button
-                        type="button"
-                        id="list-view-button"
-                        class="btn btn-soft-info nav-link btn-icon fs-14 filter-button shadow-none"
-                      >
-                        <i class="ri-list-unordered"></i>
-                      </button>
-                      <button
-                        type="button"
-                        id="dropdownMenuLink1"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        class="btn btn-soft-info btn-icon fs-14 shadow-none"
-                      >
-                        <i class="ri-more-2-fill"></i>
-                      </button>
-                      <ul
-                        class="dropdown-menu"
-                        aria-labelledby="dropdownMenuLink1"
-                      >
-                        <li><a class="dropdown-item" href="#">All</a></li>
-                        <li><a class="dropdown-item" href="#">Last Week</a></li>
-                        <li>
-                          <a class="dropdown-item" href="#">Last Month</a>
+                    <div class="page-title-right">
+                      <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+                          <a href="javascript: void(0);">Pages</a>
                         </li>
-                        <li><a class="dropdown-item" href="#">Last Year</a></li>
-                      </ul>
-                      <button
-                        class="btn btn-success addMembers-modal"
-                        data-bs-toggle="modal"
-                        data-bs-target="#addmemberModal"
-                        id="mine"
-                      >
-                        <i class="ri-add-fill me-1 align-bottom"></i> Add
-                        Event
-                      </button>
+                        <li class="breadcrumb-item active">Team</li>
+                      </ol>
                     </div>
                   </div>
-                  <!--end col-->
                 </div>
-                <!--end row-->
               </div>
-            </div>
+              <!-- end page title -->
 
-            <div class="row">
-              <div class="col-lg-12">
-                <div>
-                  <div id="teamlist">
-                    <div
-                      class="team-list grid-view-filter row"
-                      id="team-member-list"
-                    ></div>
-                    <!-- <div class="text-center mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row g-2">
+                    <div class="col-sm-4">
+                      <div class="search-box">
+                        <input type="text" class="form-control" id="searchMemberList"
+                          placeholder="Search for event name..." />
+                        <i class="ri-search-line search-icon"></i>
+                      </div>
+                    </div>
+                    <!--end col-->
+                    <div class="col-sm-auto ms-auto">
+                      <div class="list-grid-nav hstack gap-1">
+                        <button type="button" id="grid-view-button"
+                          class="btn btn-soft-info nav-link btn-icon fs-14 active filter-button shadow-none">
+                          <i class="ri-grid-fill"></i>
+                        </button>
+                        <button type="button" id="list-view-button"
+                          class="btn btn-soft-info nav-link btn-icon fs-14 filter-button shadow-none">
+                          <i class="ri-list-unordered"></i>
+                        </button>
+                        <button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false"
+                          class="btn btn-soft-info btn-icon fs-14 shadow-none">
+                          <i class="ri-more-2-fill"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                          <li><a class="dropdown-item" href="#">All</a></li>
+                          <li><a class="dropdown-item" href="#">Last Week</a></li>
+                          <li>
+                            <a class="dropdown-item" href="#">Last Month</a>
+                          </li>
+                          <li><a class="dropdown-item" href="#">Last Year</a></li>
+                        </ul>
+                        <button class="btn btn-success addMembers-modal" data-bs-toggle="modal"
+                          data-bs-target="#addmemberModal" id="mine">
+                          <i class="ri-add-fill me-1 align-bottom"></i> Add
+                          Event
+                        </button>
+                      </div>
+                    </div>
+                    <!--end col-->
+                  </div>
+                  <!--end row-->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div>
+                    <div id="teamlist">
+                      <div class="team-list grid-view-filter row" id="team-member-list"></div>
+                      <!-- <div class="text-center mb-3">
                       <a href="javascript:void(0);" class="text-success"
                         ><i
                           class="mdi mdi-loading mdi-spin fs-20 align-middle me-2"
                         ></i>
                         Load More
                       </a>
-                    </div> -->          
-          
-                  </div>
-                  <div
-                    class="py-4 mt-4 text-center"
-                    id="noresult"
-                    style="display: none"
-                  >
-                    <lord-icon
-                      src="https://cdn.lordicon.com/msoeawqm.json"
-                      trigger="loop"
-                      colors="primary:#405189,secondary:#0ab39c"
-                      style="width: 72px; height: 72px"
-                    ></lord-icon>
-                    <h5 class="mt-4">Sorry! No Result Found</h5>
-                  </div>
-                  <!-- Modal -->
-                  
-                  <div class="row" id="team-members-container"></div>
-                  <div
-                    class="modal fade"
-                    id="addmemberModal"
-                    tabindex="-1"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content border-0">
-                        <div class="modal-body">
-                          <form autocomplete="off" id="memberlist-form" class="needs-validation" novalidate enctype="multipart/form-data">
-                            <div class="row">
+                    </div> -->
+
+                    </div>
+                    <div class="py-4 mt-4 text-center" id="noresult" style="display: none">
+                      <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                        colors="primary:#405189,secondary:#0ab39c" style="width: 72px; height: 72px"></lord-icon>
+                      <h5 class="mt-4">Sorry! No Result Found</h5>
+                    </div>
+                    <!-- Modal -->
+
+                    <div class="row" id="team-members-container"></div>
+                    <div class="modal fade" id="addmemberModal" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0">
+                          <div class="modal-body">
+                            <form autocomplete="off" id="memberlist-form" class="needs-validation" novalidate
+                              enctype="multipart/form-data">
+                              <div class="row">
                                 <div class="col-lg-12">
-                                    <input type="hidden" id="memberid-input" class="form-control" value="">
-                                    <div class="px-1 pt-1">
-                                        <div class="modal-team-cover position-relative mb-0 mt-n4 mx-n4 rounded-top overflow-hidden">
-                                            <img src="/images/small/img-9.jpg" alt="" id="cover-img" class="img-fluid">
-                                            <div class="d-flex position-absolute start-0 end-0 top-0 p-3">
-                                                <div class="flex-grow-1">
-                                                    <h5 class="modal-title text-white" id="createMemberLabel">Add New Event</h5>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <div class="d-flex gap-3 align-items-center">
-                                                        <div>
-                                                            <label for="cover-image-input" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Select Cover Image"></label>
-                                                        </div>
-                                                        <button type="button" class="btn-close btn-close-white" id="createMemberBtn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                  <input type="hidden" id="memberid-input" class="form-control" value="">
+                                  <div class="px-1 pt-1">
+                                    <div
+                                      class="modal-team-cover position-relative mb-0 mt-n4 mx-n4 rounded-top overflow-hidden">
+                                      <img src="/images/small/img-9.jpg" alt="" id="cover-img" class="img-fluid">
+                                      <div class="d-flex position-absolute start-0 end-0 top-0 p-3">
+                                        <div class="flex-grow-1">
+                                          <h5 class="modal-title text-white" id="createMemberLabel">Add New Event</h5>
                                         </div>
-                                    </div>
-
-                                    <div>
-                                      <div class="mb-4 d-flex justify-content-center position-relative">
-                                          <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
-                                               alt="example placeholder" style="width: 300px;" />
-                                          <button id="cancelButton" type="button" class="btn btn-danger btn-sm rounded-circle position-absolute" 
-                                                  style="top: 10px; right: 10px; display: none;" onclick="cancelImage('selectedImage', 'customFile1')">
-                                              &times;
-                                          </button>
-                                      </div>
-                                      <div class="d-flex justify-content-center">
-                                          <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
-                                              <label class="form-label text-white m-1" for="customFile1">Choose file</label>
-                                              <input type="file" class="form-control d-none customFile1" id="customFile1" 
-                                                     onchange="displaySelectedImage(event, 'selectedImage')" />
+                                        <div class="flex-shrink-0">
+                                          <div class="d-flex gap-3 align-items-center">
+                                            <div>
+                                              <label for="cover-image-input" class="mb-0" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Select Cover Image"></label>
+                                            </div>
+                                            <button type="button" class="btn-close btn-close-white"
+                                              id="createMemberBtn-close" data-bs-dismiss="modal"
+                                              aria-label="Close"></button>
                                           </div>
+                                        </div>
                                       </div>
+                                    </div>
                                   </div>
-                                  
-                                    <div class="text-center mb-4 mt-n5 pt-2">
-                                        <div class="position-relative d-inline-block w-100"></div>
+
+                                  <div>
+                                    <div class="mb-4 d-flex justify-content-center position-relative">
+                                      <img id="selectedImage"
+                                        src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                        alt="example placeholder" style="width: 300px;" />
+                                      <button id="cancelButton" type="button"
+                                        class="btn btn-danger btn-sm rounded-circle position-absolute"
+                                        style="top: 10px; right: 10px; display: none;"
+                                        onclick="cancelImage('selectedImage', 'customFile1')">
+                                        &times;
+                                      </button>
                                     </div>
-                        
-                                    <div class="mb-3">
-                                        <label for="teammembersName" class="form-label">Event title</label>
-                                        <input type="text" class="form-control" id="teammembersName" placeholder="Enter event title" name="title" required>
-                                        <div class="invalid-feedback">Please Enter an event name.</div>
+                                    <div class="d-flex justify-content-center">
+                                      <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                                        <label class="form-label text-white m-1" for="customFile1">Choose file</label>
+                                        <input type="file" class="form-control d-none customFile1" id="customFile1"
+                                          onchange="displaySelectedImage(event, 'selectedImage')" />
+                                      </div>
                                     </div>
-                        
-                                    <!-- CKEditor Text Area -->
-                                    <div class="mb-4">
-                                      <label for="description" class="form-label">Detailed Description</label>
-                                      <textarea
-                                        class="form-control"
-                                        id="editor"
-                                        class="editor"
-                                        name="about"
-                                        placeholder="Enter detailed description here"
-                                        rows="5"
-                                        required
-                                      ></textarea>
-                                      <div class="invalid-feedback">Please provide a detailed description.</div>
-                                    </div>
-                                    <input type="hidden" id="project-input" class="form-control" value="">
-                                    <input type="hidden" id="task-input" class="form-control" value="">
-                        
-                                    <div class="hstack gap-2 justify-content-end">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-success" id="addNewMember">Add Event</button>
-                                        <button type="button" class="btn btn-success" id="updateMember" style="display: none;">update Event</button>
-                                    </div>
+                                  </div>
+
+                                  <div class="text-center mb-4 mt-n5 pt-2">
+                                    <div class="position-relative d-inline-block w-100"></div>
+                                  </div>
+
+                                  <div class="mb-3">
+                                    <label for="teammembersName" class="form-label">Event title</label>
+                                    <input type="text" class="form-control" id="teammembersName"
+                                      placeholder="Enter event title" name="title" required>
+                                    <div class="invalid-feedback">Please Enter an event name.</div>
+                                  </div>
+
+                                  <!-- CKEditor Text Area -->
+                                  <div class="mb-4">
+                                    <label for="description" class="form-label">Detailed Description</label>
+                                    <textarea class="form-control" id="editor" class="editor" name="about"
+                                      placeholder="Enter detailed description here" rows="5" required></textarea>
+                                    <div class="invalid-feedback">Please provide a detailed description.</div>
+                                  </div>
+                                  <input type="hidden" id="project-input" class="form-control" value="">
+                                  <input type="hidden" id="task-input" class="form-control" value="">
+
+                                  <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-success" id="addNewMember">Add Event</button>
+                                    <button type="button" class="btn btn-success" id="updateMember"
+                                      style="display: none;">update Event</button>
+                                  </div>
                                 </div>
-                            </div>
-                        </form>                        
-                        
-                        </div>
-                      </div>
-                      <!--end modal-content-->
-                    </div>
-                    <!--end modal-dialog-->
-                  </div>
-                  <!--end modal-->
+                              </div>
+                            </form>
 
-                  <div
-                    class="offcanvas offcanvas-end border-0"
-                    tabindex="-1"
-                    id="member-overview"
-                  >
-                    <!--end offcanvas-header-->
-                    <div class="offcanvas-body profile-offcanvas p-0">
-                      <div class="team-cover">
-                        <img
-                          src="/images/small/img-9.jpg"
-                          alt=""
-                          class="img-fluid"
-                        />
+                          </div>
+                        </div>
+                        <!--end modal-content-->
                       </div>
-                      <div class="p-3">
-                        <div class="team-settings">
-                          <div class="row">
-                            <div class="col">
-                              <button
-                                type="button"
-                                class="btn btn-light btn-icon rounded-circle btn-sm favourite-btn"
-                              >
-                                <i class="ri-star-fill fs-14"></i>
-                              </button>
+                      <!--end modal-dialog-->
+                    </div>
+                    <!--end modal-->
+
+                    <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="member-overview">
+                      <!--end offcanvas-header-->
+                      <div class="offcanvas-body profile-offcanvas p-0">
+                        <div class="team-cover">
+                          <img src="/images/small/img-9.jpg" alt="" class="img-fluid" />
+                        </div>
+                        <div class="p-3">
+                          <div class="team-settings">
+                            <div class="row">
+                              <div class="col">
+                                <button type="button"
+                                  class="btn btn-light btn-icon rounded-circle btn-sm favourite-btn">
+                                  <i class="ri-star-fill fs-14"></i>
+                                </button>
+                              </div>
+                              <div class="col text-end dropdown">
+                                <a href="javascript:void(0);" id="dropdownMenuLink14" data-bs-toggle="dropdown"
+                                  aria-expanded="false">
+                                  <i class="ri-more-fill fs-17"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink14">
+                                  <li>
+                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                        class="ri-star-line me-2 align-middle"></i>Favorites</a>
+                                  </li>
+                                  <li>
+                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                        class="ri-delete-bin-5-line me-2 align-middle"></i>Delete</a>
+                                  </li>
+                                </ul>
+                              </div>
                             </div>
-                            <div class="col text-end dropdown">
-                              <a
-                                href="javascript:void(0);"
-                                id="dropdownMenuLink14"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              >
-                                <i class="ri-more-fill fs-17"></i>
+                          </div>
+                          <!--end col-->
+                        </div>
+                        <div class="p-3 text-center">
+                          <img src="/images/users/avatar-2.jpg" alt=""
+                            class="avatar-lg img-thumbnail rounded-circle mx-auto profile-img" />
+                          <div class="mt-3">
+                            <h5 class="fs-15 profile-name">Nancy Martino</h5>
+                            <p class="text-muted profile-designation">
+                              Team Leader & HR
+                            </p>
+                          </div>
+                          <div class="hstack gap-2 justify-content-center mt-4">
+                            <div class="avatar-xs">
+                              <a href="javascript:void(0);"
+                                class="avatar-title bg-secondary-subtle text-secondary rounded fs-16">
+                                <i class="ri-facebook-fill"></i>
                               </a>
-                              <ul
-                                class="dropdown-menu dropdown-menu-end"
-                                aria-labelledby="dropdownMenuLink14"
-                              >
-                                <li>
-                                  <a
-                                    class="dropdown-item"
-                                    href="javascript:void(0);"
-                                    ><i
-                                      class="ri-star-line me-2 align-middle"
-                                    ></i
-                                    >Favorites</a
-                                  >
-                                </li>
-                                <li>
-                                  <a
-                                    class="dropdown-item"
-                                    href="javascript:void(0);"
-                                    ><i
-                                      class="ri-delete-bin-5-line me-2 align-middle"
-                                    ></i
-                                    >Delete</a
-                                  >
-                                </li>
-                              </ul>
+                            </div>
+                            <div class="avatar-xs">
+                              <a href="javascript:void(0);"
+                                class="avatar-title bg-success-subtle text-success rounded fs-16">
+                                <i class="ri-slack-fill"></i>
+                              </a>
+                            </div>
+                            <div class="avatar-xs">
+                              <a href="javascript:void(0);" class="avatar-title bg-info-subtle text-info rounded fs-16">
+                                <i class="ri-linkedin-fill"></i>
+                              </a>
+                            </div>
+                            <div class="avatar-xs">
+                              <a href="javascript:void(0);"
+                                class="avatar-title bg-danger-subtle text-danger rounded fs-16">
+                                <i class="ri-dribbble-fill"></i>
+                              </a>
                             </div>
                           </div>
                         </div>
-                        <!--end col-->
-                      </div>
-                      <div class="p-3 text-center">
-                        <img
-                          src="/images/users/avatar-2.jpg"
-                          alt=""
-                          class="avatar-lg img-thumbnail rounded-circle mx-auto profile-img"
-                        />
-                        <div class="mt-3">
-                          <h5 class="fs-15 profile-name">Nancy Martino</h5>
-                          <p class="text-muted profile-designation">
-                            Team Leader & HR
-                          </p>
+                        <div class="row g-0 text-center">
+                          <div class="col-6">
+                            <div class="p-3 border border-dashed border-start-0">
+                              <h5 class="mb-1 profile-project">124</h5>
+                              <p class="text-muted mb-0">Projects</p>
+                            </div>
+                          </div>
+                          <!--end col-->
+                          <div class="col-6">
+                            <div class="p-3 border border-dashed border-start-0">
+                              <h5 class="mb-1 profile-task">81</h5>
+                              <p class="text-muted mb-0">Tasks</p>
+                            </div>
+                          </div>
+                          <!--end col-->
                         </div>
-                        <div class="hstack gap-2 justify-content-center mt-4">
-                          <div class="avatar-xs">
-                            <a
-                              href="javascript:void(0);"
-                              class="avatar-title bg-secondary-subtle text-secondary rounded fs-16"
-                            >
-                              <i class="ri-facebook-fill"></i>
-                            </a>
+                        <!--end row-->
+                        <div class="p-3">
+                          <h5 class="fs-15 mb-3">Personal Details</h5>
+                          <div class="mb-3">
+                            <p class="text-muted text-uppercase fw-semibold fs-12 mb-2">
+                              Number
+                            </p>
+                            <h6>+(256) 2451 8974</h6>
                           </div>
-                          <div class="avatar-xs">
-                            <a
-                              href="javascript:void(0);"
-                              class="avatar-title bg-success-subtle text-success rounded fs-16"
-                            >
-                              <i class="ri-slack-fill"></i>
-                            </a>
+                          <div class="mb-3">
+                            <p class="text-muted text-uppercase fw-semibold fs-12 mb-2">
+                              Email
+                            </p>
+                            <h6>nancymartino@email.com</h6>
                           </div>
-                          <div class="avatar-xs">
-                            <a
-                              href="javascript:void(0);"
-                              class="avatar-title bg-info-subtle text-info rounded fs-16"
-                            >
-                              <i class="ri-linkedin-fill"></i>
-                            </a>
-                          </div>
-                          <div class="avatar-xs">
-                            <a
-                              href="javascript:void(0);"
-                              class="avatar-title bg-danger-subtle text-danger rounded fs-16"
-                            >
-                              <i class="ri-dribbble-fill"></i>
-                            </a>
+                          <div>
+                            <p class="text-muted text-uppercase fw-semibold fs-12 mb-2">
+                              Location
+                            </p>
+                            <h6 class="mb-0">Carson City - USA</h6>
                           </div>
                         </div>
-                      </div>
-                      <div class="row g-0 text-center">
-                        <div class="col-6">
-                          <div class="p-3 border border-dashed border-start-0">
-                            <h5 class="mb-1 profile-project">124</h5>
-                            <p class="text-muted mb-0">Projects</p>
+                        <div class="p-3 border-top">
+                          <h5 class="fs-15 mb-4">File Manager</h5>
+                          <div class="d-flex mb-3">
+                            <div class="flex-shrink-0 avatar-xs">
+                              <div class="avatar-title bg-danger-subtle text-danger rounded fs-16">
+                                <i class="ri-image-2-line"></i>
+                              </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                              <h6 class="mb-1">
+                                <a href="javascript:void(0);">Images</a>
+                              </h6>
+                              <p class="text-muted mb-0">4469 Files</p>
+                            </div>
+                            <div class="text-muted">12 GB</div>
                           </div>
-                        </div>
-                        <!--end col-->
-                        <div class="col-6">
-                          <div class="p-3 border border-dashed border-start-0">
-                            <h5 class="mb-1 profile-task">81</h5>
-                            <p class="text-muted mb-0">Tasks</p>
+                          <div class="d-flex mb-3">
+                            <div class="flex-shrink-0 avatar-xs">
+                              <div class="avatar-title bg-secondary-subtle text-secondary rounded fs-16">
+                                <i class="ri-file-zip-line"></i>
+                              </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                              <h6 class="mb-1">
+                                <a href="javascript:void(0);">Documents</a>
+                              </h6>
+                              <p class="text-muted mb-0">46 Files</p>
+                            </div>
+                            <div class="text-muted">3.46 GB</div>
                           </div>
-                        </div>
-                        <!--end col-->
-                      </div>
-                      <!--end row-->
-                      <div class="p-3">
-                        <h5 class="fs-15 mb-3">Personal Details</h5>
-                        <div class="mb-3">
-                          <p
-                            class="text-muted text-uppercase fw-semibold fs-12 mb-2"
-                          >
-                            Number
-                          </p>
-                          <h6>+(256) 2451 8974</h6>
-                        </div>
-                        <div class="mb-3">
-                          <p
-                            class="text-muted text-uppercase fw-semibold fs-12 mb-2"
-                          >
-                            Email
-                          </p>
-                          <h6>nancymartino@email.com</h6>
-                        </div>
-                        <div>
-                          <p
-                            class="text-muted text-uppercase fw-semibold fs-12 mb-2"
-                          >
-                            Location
-                          </p>
-                          <h6 class="mb-0">Carson City - USA</h6>
+                          <div class="d-flex mb-3">
+                            <div class="flex-shrink-0 avatar-xs">
+                              <div class="avatar-title bg-success-subtle text-success rounded fs-16">
+                                <i class="ri-live-line"></i>
+                              </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                              <h6 class="mb-1">
+                                <a href="javascript:void(0);">Media</a>
+                              </h6>
+                              <p class="text-muted mb-0">124 Files</p>
+                            </div>
+                            <div class="text-muted">4.3 GB</div>
+                          </div>
+                          <div class="d-flex">
+                            <div class="flex-shrink-0 avatar-xs">
+                              <div class="avatar-title bg-primary-subtle text-primary rounded fs-16">
+                                <i class="ri-error-warning-line"></i>
+                              </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                              <h6 class="mb-1">
+                                <a href="javascript:void(0);">Others</a>
+                              </h6>
+                              <p class="text-muted mb-0">18 Files</p>
+                            </div>
+                            <div class="text-muted">846 MB</div>
+                          </div>
                         </div>
                       </div>
-                      <div class="p-3 border-top">
-                        <h5 class="fs-15 mb-4">File Manager</h5>
-                        <div class="d-flex mb-3">
-                          <div class="flex-shrink-0 avatar-xs">
-                            <div
-                              class="avatar-title bg-danger-subtle text-danger rounded fs-16"
-                            >
-                              <i class="ri-image-2-line"></i>
-                            </div>
-                          </div>
-                          <div class="flex-grow-1 ms-3">
-                            <h6 class="mb-1">
-                              <a href="javascript:void(0);">Images</a>
-                            </h6>
-                            <p class="text-muted mb-0">4469 Files</p>
-                          </div>
-                          <div class="text-muted">12 GB</div>
-                        </div>
-                        <div class="d-flex mb-3">
-                          <div class="flex-shrink-0 avatar-xs">
-                            <div
-                              class="avatar-title bg-secondary-subtle text-secondary rounded fs-16"
-                            >
-                              <i class="ri-file-zip-line"></i>
-                            </div>
-                          </div>
-                          <div class="flex-grow-1 ms-3">
-                            <h6 class="mb-1">
-                              <a href="javascript:void(0);">Documents</a>
-                            </h6>
-                            <p class="text-muted mb-0">46 Files</p>
-                          </div>
-                          <div class="text-muted">3.46 GB</div>
-                        </div>
-                        <div class="d-flex mb-3">
-                          <div class="flex-shrink-0 avatar-xs">
-                            <div
-                              class="avatar-title bg-success-subtle text-success rounded fs-16"
-                            >
-                              <i class="ri-live-line"></i>
-                            </div>
-                          </div>
-                          <div class="flex-grow-1 ms-3">
-                            <h6 class="mb-1">
-                              <a href="javascript:void(0);">Media</a>
-                            </h6>
-                            <p class="text-muted mb-0">124 Files</p>
-                          </div>
-                          <div class="text-muted">4.3 GB</div>
-                        </div>
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 avatar-xs">
-                            <div
-                              class="avatar-title bg-primary-subtle text-primary rounded fs-16"
-                            >
-                              <i class="ri-error-warning-line"></i>
-                            </div>
-                          </div>
-                          <div class="flex-grow-1 ms-3">
-                            <h6 class="mb-1">
-                              <a href="javascript:void(0);">Others</a>
-                            </h6>
-                            <p class="text-muted mb-0">18 Files</p>
-                          </div>
-                          <div class="text-muted">846 MB</div>
-                        </div>
+                      <!--end offcanvas-body-->
+                      <div class="offcanvas-foorter border p-3 hstack gap-3 text-center position-relative">
+                        <button class="btn btn-light w-100">
+                          <i class="ri-question-answer-fill align-bottom ms-1"></i>
+                          Send Message
+                        </button>
+                        <a href="pages-profile.html" class="btn btn-primary w-100"><i
+                            class="ri-user-3-fill align-bottom ms-1"></i> View
+                          Profile</a>
                       </div>
                     </div>
-                    <!--end offcanvas-body-->
-                    <div
-                      class="offcanvas-foorter border p-3 hstack gap-3 text-center position-relative"
-                    >
-                      <button class="btn btn-light w-100">
-                        <i
-                          class="ri-question-answer-fill align-bottom ms-1"
-                        ></i>
-                        Send Message
-                      </button>
-                      <a href="pages-profile.html" class="btn btn-primary w-100"
-                        ><i class="ri-user-3-fill align-bottom ms-1"></i> View
-                        Profile</a
-                      >
-                    </div>
+                    <!--end offcanvas-->
                   </div>
-                  <!--end offcanvas-->
                 </div>
+                <!-- end col -->
               </div>
-              <!-- end col -->
+              <!--end row-->
             </div>
-            <!--end row-->
+            <!-- container-fluid -->
           </div>
-          <!-- container-fluid -->
+          <!-- End Page-content -->
+
+          <%- include('footer.ejs') -%>
         </div>
-        <!-- End Page-content -->
+        <!-- end main content-->
+  </div>
+  <!-- END layout-wrapper -->
 
-        <%- include('footer.ejs') -%>
-      </div>
-      <!-- end main content-->
-    </div>
-    <!-- END layout-wrapper -->
-
-    <!-- removeFileItemModal -->
-    <div
-      id="removeMemberModal"
-      class="modal fade zoomIn"
-      tabindex="-1"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              id="close-removeMemberModal"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="mt-2 text-center">
-              <lord-icon
-                src="https://cdn.lordicon.com/gsqxdxog.json"
-                trigger="loop"
-                colors="primary:#f7b84b,secondary:#f06548"
-                style="width: 100px; height: 100px"
-              ></lord-icon>
-              <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                <h4>Are you sure ?</h4>
-                <p class="text-muted mx-4 mb-0">
-                  Are you sure you want to remove this member ?
-                </p>
-              </div>
-            </div>
-            <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-              <button
-                type="button"
-                class="btn w-sm btn-light"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                class="btn w-sm btn-danger"
-                id="remove-item"
-              >
-                Yes, Delete It!
-              </button>
+  <!-- removeFileItemModal -->
+  <div id="removeMemberModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            id="close-removeMemberModal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mt-2 text-center">
+            <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
+              colors="primary:#f7b84b,secondary:#f06548" style="width: 100px; height: 100px"></lord-icon>
+            <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+              <h4>Are you sure ?</h4>
+              <p class="text-muted mx-4 mb-0">
+                Are you sure you want to remove this member ?
+              </p>
             </div>
           </div>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-    <!--end delete modal -->
-
-    <!--start back-to-top-->
-    <button
-      onclick="topFunction()"
-      class="btn btn-danger btn-icon"
-      id="back-to-top"
-    >
-      <i class="ri-arrow-up-line"></i>
-    </button>
-    <!--end back-to-top-->
-
-    <!--preloader-->
-    <div id="preloader">
-      <div id="status">
-        <div class="spinner-border text-primary avatar-sm" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+            <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn w-sm btn-danger" id="remove-item">
+              Yes, Delete It!
+            </button>
+          </div>
         </div>
       </div>
+      <!-- /.modal-content -->
     </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+  <!--end delete modal -->
 
-    <div class="customizer-setting d-none d-md-block">
-      <div
-        class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#theme-settings-offcanvas"
-        aria-controls="theme-settings-offcanvas"
-      >
-        <i class="mdi mdi-spin mdi-cog-outline fs-22"></i>
+  <!--start back-to-top-->
+  <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+    <i class="ri-arrow-up-line"></i>
+  </button>
+  <!--end back-to-top-->
+
+  <!--preloader-->
+  <div id="preloader">
+    <div id="status">
+      <div class="spinner-border text-primary avatar-sm" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
+  </div>
 
-    <!-- Theme Settings -->
-    <%-include('themesetting.ejs')-%>
+  <div class="customizer-setting d-none d-md-block">
+    <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas"
+      data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
+      <i class="mdi mdi-spin mdi-cog-outline fs-22"></i>
+    </div>
+  </div>
+
+  <!-- Theme Settings -->
+  <%-include('themesetting.ejs')-%>
     <!-- JAVASCRIPT -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -711,107 +560,172 @@
     <script src="/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js"></script>
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script
+      src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script
+      src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="/js/pages/form-file-upload.init.js"></script>
 
     <!-- App js -->
     <script src="/js/app.js"></script>
-<script>
+    <script>
       // Register FilePond Plugins
-FilePond.registerPlugin(
-    FilePondPluginImagePreview,
-    FilePondPluginFileValidateSize,
-    FilePondPluginFileValidateType
-);
+      FilePond.registerPlugin(
+        FilePondPluginImagePreview,
+        FilePondPluginFileValidateSize,
+        FilePondPluginFileValidateType
+      );
 
-// Create FilePond Instance
-FilePond.create(document.querySelector('.filepond'), {
-    maxFiles: 3,
-    maxFileSize: '3MB',
-    allowReorder: true,
-});
-</script>
+      // Create FilePond Instance
+      FilePond.create(document.querySelector('.filepond'), {
+        maxFiles: 3,
+        maxFileSize: '3MB',
+        allowReorder: true,
+      });
+    </script>
 
-<script>
- function displaySelectedImage(event, elementId) {
-    const selectedImage = document.getElementById(elementId);
-    const cancelButton = document.getElementById('cancelButton');
-    const fileInput = event.target;
+    <script>
+      function displaySelectedImage(event, elementId) {
+        const selectedImage = document.getElementById(elementId);
+        const cancelButton = document.getElementById('cancelButton');
+        const fileInput = event.target;
 
-    if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
+        if (fileInput.files && fileInput.files[0]) {
+          const reader = new FileReader();
 
-        reader.onload = function(e) {
+          reader.onload = function (e) {
             selectedImage.src = e.target.result;
             cancelButton.style.display = 'block'; // Show the cancel button
-        };
+          };
 
-        reader.readAsDataURL(fileInput.files[0]);
-    }
-}
+          reader.readAsDataURL(fileInput.files[0]);
+        }
+      }
 
-function cancelImage(imageId, fileInputId) {
-    const selectedImage = document.getElementById(imageId);
-    const fileInput = document.getElementById(fileInputId);
-    const cancelButton = document.getElementById('cancelButton');
+      function cancelImage(imageId, fileInputId) {
+        const selectedImage = document.getElementById(imageId);
+        const fileInput = document.getElementById(fileInputId);
+        const cancelButton = document.getElementById('cancelButton');
 
-    // Reset the image source to placeholder
-    selectedImage.src = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg';
-    // Hide the cancel button
-    cancelButton.style.display = 'none';
-    // Clear the file input
-    fileInput.value = '';
-}
+        // Reset the image source to placeholder
+        selectedImage.src = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg';
+        // Hide the cancel button
+        cancelButton.style.display = 'none';
+        // Clear the file input
+        fileInput.value = '';
+      }
 
-</script>
+    </script>
 
-<script>
-  $(document).ready(function () {
-      // Function to fetch all team members
-      async function fetchEvent() {
+    <script>
+      $(document).ready(function () {
+        // Function to fetch all team members
+        async function fetchEvent() {
           try {
-              // Show spinner
-              const spinner = `
-                  <div id="team-members-spinner" class="spinner-container">
-                    <div class="d-flex justify-content-center align-items-center vh-70">
-                        <div class="spinner-grow" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                </div>`;
-              $('body').append(spinner); // Append the spinner to the body to avoid conflicts
+            // Show spinner
+            const spinner = `
+              <div id="team-members-spinner" class="spinner-container">
+                <div class="d-flex justify-content-center align-items-center vh-70">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="200" height="200" style="shape-rendering: auto; display: block; background: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g><g transform="translate(80,50)">
+                      <g transform="rotate(0)">
+                        <circle fill-opacity="1" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.875s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.875s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(71.21320343559643,71.21320343559643)">
+                      <g transform="rotate(45)">
+                        <circle fill-opacity="0.875" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.75s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.75s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(50,80)">
+                      <g transform="rotate(90)">
+                        <circle fill-opacity="0.75" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.625s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.625s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(28.786796564403577,71.21320343559643)">
+                      <g transform="rotate(135)">
+                        <circle fill-opacity="0.625" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.5s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.5s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(20,50.00000000000001)">
+                      <g transform="rotate(180)">
+                        <circle fill-opacity="0.5" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.375s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.375s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(28.78679656440357,28.786796564403577)">
+                      <g transform="rotate(225)">
+                        <circle fill-opacity="0.375" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.25s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.25s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(49.99999999999999,20)">
+                      <g transform="rotate(270)">
+                        <circle fill-opacity="0.25" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.125s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.125s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(71.21320343559643,28.78679656440357)">
+                      <g transform="rotate(315)">
+                        <circle fill-opacity="0.125" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="0s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="0s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>`;
+            $('body').append(spinner);
 
-              const response = await $.ajax({
-                  url: '/admin/events',
-                  method: 'GET',
-                  cache: false, // Disable caching
-              });
+            const response = await $.ajax({
+              url: '/admin/events',
+              method: 'GET',
+              cache: false, // Disable caching
+            });
 
-              // Remove spinner after data is loaded
-              $('#team-members-spinner').remove();
+            // Remove spinner after data is loaded
+            $('#team-members-spinner').remove();
 
-              // Check if response is successful
-              if (response && response.statusCode === 200) {
-                  const teamMembers = response.data;
+            // Check if response is successful
+            if (response && response.statusCode === 200) {
+              const teamMembers = response.data;
 
-                  // Clear existing cards
-                  $('#team-members-container').empty();
+              // Clear existing cards
+              $('#team-members-container').empty();
 
-                  if (teamMembers.length === 0) {
-                      
-                    // Append the success alert when no team members are found
-                    const successAlert = `
+              if (teamMembers.length === 0) {
+
+                // Append the success alert when no team members are found
+                const successAlert = `
                           <div class="alert alert-success alert-dismissible alert-label-icon rounded-label shadow fade show" role="alert">
                               <i class="ri-notification-off-line label-icon"></i>
                               <strong>No event found</strong> - Events have not been created yet.
                               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                           </div>`;
-                      $('#team-members-container').append(successAlert);
-                  } else {
-                      // Populate UI with team members
-                      teamMembers.forEach(member => {
-                        const card = `
+                $('#team-members-container').append(successAlert);
+              } else {
+                // Populate UI with team members
+                teamMembers.forEach(member => {
+                  const card = `
                             <div class="col-xl-4 col-lg-6 col-md-6 mb-4" data-member-id="${member.id}">
                                 <div class="card h-100 shadow-sm">
                                   <!-- Card Image -->
@@ -856,217 +770,139 @@ function cancelImage(imageId, fileInputId) {
                                 </div>
                               </div>
                               `;
-                        $('#team-members-container').append(card);
-                      });
-                  }
-              } else {
-                  Swal.fire({
-                      title: "Error!",
-                      text: response.message,
-                      icon: "error",
-                  });
+                  $('#team-members-container').append(card);
+                });
               }
-          } catch (error) {
-              console.error('Error:', error);
-
-              // Handle errors specifically
+            } else {
               Swal.fire({
-                  title: "Error!",
-                  text: "Failed to fetch Events. Please check your connection and try again.",
-                  icon: "error",
+                title: "Error!",
+                text: response.message,
+                icon: "error",
               });
+            }
+          } catch (error) {
+            console.error('Error:', error);
 
-              // Remove spinner
-              $('#team-members-spinner').remove();
+            // Handle errors specifically
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to fetch Events. Please check your connection and try again.",
+              icon: "error",
+            });
+
+            // Remove spinner
+            $('#team-members-spinner').remove();
           }
-      }
+        }
 
-       // Function to delete a Event
-       async function deleteEvent(memberId) {
+        // Function to delete a Event
+        async function deleteEvent(memberId) {
+          showSpinner()
           try {
-              const response = await $.ajax({
-                  url: `/admin/deletev/${memberId}`,
-                  method: 'DELETE',
-              });
+            const response = await $.ajax({
+              url: `/admin/deletev/${memberId}`,
+              method: 'DELETE',
+            });
 
-              if (response && response.statusCode === 200) {
-                  Swal.fire({
-                      title: "Deleted!",
-                      text: response.message,
-                      icon: "success",
-                      timer: 2000,
-                  });
-
-                  // Remove the member card from the DOM
-                  $(`div[data-member-id="${memberId}"]`).remove();
-              } else {
-                  Swal.fire({
-                      title: "Error!",
-                      text: response.message || "Failed to delete the Event.",
-                      icon: "error",
-                  });
-              }
-          } catch (error) {
-              console.error('Error:', error);
+            hideSpinner()
+            if (response && response.statusCode === 200) {
               Swal.fire({
-                  title: "Error!",
-                  text: "Failed to delete the Event. Please try again later.",
-                  icon: "error",
+                title: "Deleted!",
+                text: response.message,
+                icon: "success",
+                timer: 2000,
               });
-          }
-      }
 
-      // Attach event listener for delete icons
-      $('#team-members-container').on('click', '.delete-member', function () {
+              // Remove the member card from the DOM
+              $(`div[data-member-id="${memberId}"]`).remove();
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: response.message || "Failed to delete the Event.",
+                icon: "error",
+              });
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to delete the Event. Please try again later.",
+              icon: "error",
+            });
+          }
+        }
+
+        // Attach event listener for delete icons
+        $('#team-members-container').on('click', '.delete-member', function () {
           const memberId = $(this).closest('div[data-member-id]').data('member-id');
 
           Swal.fire({
-              title: "Are you sure?",
-              text: "You won't be able to revert this!",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#d33",
-              cancelButtonColor: "#3085d6",
-              confirmButtonText: "Yes, delete it!",
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!",
           }).then((result) => {
-              if (result.isConfirmed) {
-                  deleteEvent(memberId);
-              }
+            if (result.isConfirmed) {
+              deleteEvent(memberId);
+            }
           });
-      });
+        });
 
-      $(document).on('click', '.edit-member', async function () {
-        const memberId = $(this).data('id'); // Get the ID of the member to edit
+        $(document).on('click', '.edit-member', async function () {
+          const memberId = $(this).data('id'); // Get the ID of the member to edit
 
-        try {
+          try {
             // Fetch member data from the server
             const response = await $.ajax({
-                url: `/admin/event/${memberId}`, // Your endpoint to fetch the specific team member
-                method: 'GET',
+              url: `/admin/event/${memberId}`, // Your endpoint to fetch the specific team member
+              method: 'GET',
             });
 
             if (response && response.statusCode === 200) {
-                const member = response.data;
+              const member = response.data;
 
-                // Populate the modal fields with the member's data
-                $('#memberid-input').val(member.id);
-                $('#teammembersName').val(member.title);
-                  // Populate CKEditor with the 'about' value
-                if (CKEDITOR.instances.editor) {
-                    CKEDITOR.instances.editor.setData(member.about); // Update CKEditor content
-                }
+              // Populate the modal fields with the member's data
+              $('#memberid-input').val(member.id);
+              $('#teammembersName').val(member.title);
+              // Populate CKEditor with the 'about' value
+              if (CKEDITOR.instances.editor) {
+                CKEDITOR.instances.editor.setData(member.about); // Update CKEditor content
+              }
 
-                $('#selectedImage').attr('src', `/uploads/${member.imageUrl}`); // Show the existing image
+              $('#selectedImage').attr('src', `/uploads/${member.imageUrl}`); // Show the existing image
 
-                // Show the modal
-                $('#addmemberModal').modal('show');
-                $('#updateMember').show(); // Show Update button
-                $('#addNewMember').hide(); // Show Update button
-                // $('#updateMember')
-                // .text('Update Member') // Set button to "Update Member"
-                // .data('action', 'update'); // Pass update action type
+              // Show the modal
+              $('#addmemberModal').modal('show');
+              $('#updateMember').show(); // Show Update button
+              $('#addNewMember').hide(); // Show Update button
+
             } else {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Failed to fetch Event data.",
-                    icon: "error",
-                });
+              Swal.fire({
+                title: "Error!",
+                text: "Failed to fetch Event data.",
+                icon: "error",
+              });
             }
-        } catch (error) {
+          } catch (error) {
             console.error('Error:', error);
             Swal.fire({
-                title: "Error!",
-                text: "Failed to fetch Events data. Please try again.",
-                icon: "error",
+              title: "Error!",
+              text: "Failed to fetch Events data. Please try again.",
+              icon: "error",
             });
-        }
-      });
+          }
+        });
 
-      // $('#updateMember').on('click', async function (e) {
-      //   e.preventDefault();
-
-      //   if (CKEDITOR.instances.editor) {
-      //           CKEDITOR.instances.editor.updateElement();
-      //           const editorContent = CKEDITOR.instances.editor.getData(); // Get the full HTML content
-      //           $('#editor').val(editorContent); // Save the HTML content in the textarea
-      //       }
-
-      //   const memberId = $('#memberid-input').val(); // Check if it's an update
-      //   const formData = new FormData($('#memberlist-form')[0]);
-      //   var fileInput = document.querySelector("#customFile1");
-      //   var file = fileInput.files[0];
-      //   console.log("file:", file);
-      //   console.log("memberId:", memberId);
-      //   formData.append('imageUrl', file);
-
-      //   // Log FormData to see the files and other fields
-      //   console.log([...formData.entries()]);
-
-      //   try {
-      //       // Confirm before proceeding
-      //       const result = await Swal.fire({
-      //           title: 'Are you sure?',
-      //           text: "Do you want to save the changes?",
-      //           icon: 'warning',
-      //           showCancelButton: true,
-      //           confirmButtonText: 'Yes, save it!',
-      //           cancelButtonText: 'No, cancel!',
-      //       });
-
-      //       if (result.isConfirmed) {
-      //   //       const url = $('#addNewMember').data('action') === 'update'
-      //   //     ? `/admin/update/${memberId}`
-      //   //     : '/admin/create';
-
-      //   // const method = $('#addNewMember').data('action') === 'update' ? 'PUT' : 'POST';
-
-      //           const response = await $.ajax({
-      //               url: `/admin/updatev/${memberId}`,
-      //               method: 'PUT',
-      //               data: formData,
-      //               processData: false,
-      //               contentType: false,
-      //           });
-
-      //           if (response && response.statusCode === (memberId ? 200 : 201)) {
-      //               $('#addmemberModal').modal('hide'); // Hide the modal
-      //               $('#updateMember').hide(); // hide Update button
-      //               $('#addNewMember').show(); // Show add button
-      //               Swal.fire({
-      //                   title: "Success!",
-      //                   text: response.message,
-      //                   icon: "success",
-      //                   timer: 2000,
-      //               });
-
-      //               // Fetch team members again
-      //               await fetchEvent();
-      //           } else {
-      //               Swal.fire({
-      //                   title: "Error!",
-      //                   text: response.message,
-      //                   icon: "error",
-      //                   timer: 2000,
-      //               });
-      //           }
-      //       }
-      //   } catch (error) {
-      //       console.error('Error:', error);
-      //       Swal.fire({
-      //           title: "Error!",
-      //           text: "Failed to save changes. Please try again.",
-      //           icon: "error",
-      //       });
-      //   }
-      // });
-
-            $('#updateMember').on('click', async function (e) {
+        $('#updateMember').on('click', async function (e) {
           e.preventDefault();
 
           if (CKEDITOR.instances.editor) {
-              CKEDITOR.instances.editor.updateElement();
-              const editorContent = CKEDITOR.instances.editor.getData(); // Get the full HTML content
-              $('#editor').val(editorContent); // Save the HTML content in the textarea
+            CKEDITOR.instances.editor.updateElement();
+            const editorContent = CKEDITOR.instances.editor.getData(); // Get the full HTML content
+            $('#editor').val(editorContent); // Save the HTML content in the textarea
           }
 
           const memberId = $('#memberid-input').val(); // Get memberId for updating
@@ -1081,105 +917,94 @@ function cancelImage(imageId, fileInputId) {
           console.log([...formData.entries()]);
 
           try {
-              // Confirm before proceeding
-              const result = await Swal.fire({
-                  title: 'Are you sure?',
-                  text: "Do you want to save the changes?",
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Yes, save it!',
-                  cancelButtonText: 'No, cancel!',
+
+            // Confirm before proceeding
+            const result = await Swal.fire({
+              title: 'Are you sure?',
+              text: "Do you want to save the changes?",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, save it!',
+              cancelButtonText: 'No, cancel!',
+            });
+
+            if (result.isConfirmed) {
+              
+              $('#addmemberModal').modal('hide');
+              showSpinner()
+              const response = await $.ajax({
+                url: `/admin/updatev/${memberId}`,
+                method: 'PUT',
+                data: formData,
+                processData: false,
+                contentType: false,
               });
+              hideSpinner()
+              if (response && response.statusCode === (memberId ? 200 : 201)) {
+                $('#addmemberModal').modal('hide'); // Hide the modal
+                $('#updateMember').hide(); // Hide Update button
+                $('#addNewMember').show(); // Show add button
+                Swal.fire({
+                  title: "Success!",
+                  text: response.message,
+                  icon: "success",
+                  timer: 2000,
+                });
 
-              if (result.isConfirmed) {
-                  const response = await $.ajax({
-                      url: `/admin/updatev/${memberId}`,
-                      method: 'PUT',
-                      data: formData,
-                      processData: false,
-                      contentType: false,
-                  });
+                // Update the DOM directly
+                const updatedMemberDiv = $(`div[data-member-id="${memberId}"]`);
+                if (updatedMemberDiv.length) {
 
-                  if (response && response.statusCode === (memberId ? 200 : 201)) {
-                      $('#addmemberModal').modal('hide'); // Hide the modal
-                      $('#updateMember').hide(); // Hide Update button
-                      $('#addNewMember').show(); // Show add button
-                      Swal.fire({
-                          title: "Success!",
-                          text: response.message,
-                          icon: "success",
-                          timer: 2000,
-                      });
+                  // Clear the entire content of the card body to prevent duplication
+                  updatedMemberDiv.find('.card-body').empty();
 
-                      // Update the DOM directly
-                      const updatedMemberDiv = $(`div[data-member-id="${memberId}"]`);
-                      if (updatedMemberDiv.length) {
-
-                        // updatedMemberDiv.find('.card-body').empty(); 
-
-                        // updatedMemberDiv.find('.card-title').text(response.data.title || ''); 
-                        // updatedMemberDiv.find('.card-text.text-muted').empty().html(response.data.about || ''); 
-                        // updatedMemberDiv.find('.card-img-top').attr('src', `/uploads/${response.data.imageUrl || ''}`);
-
-                            // Clear the entire content of the card body to prevent duplication
-                              updatedMemberDiv.find('.card-body').empty();
-
-                          // Manually insert the updated title, about, and image inside the card body to match your structure
-                          updatedMemberDiv.find('.card-body').append(`
+                  // Manually insert the updated title, about, and image inside the card body to match your structure
+                  updatedMemberDiv.find('.card-body').append(`
                               <h5 class="card-title mb-1">${response.data.title || ''}</h5>
                               <p class="card-text text-muted mb-2">${response.data.about || ''}</p>
                               <p class="card-text">
-                                  <small class="text-muted">Last updated just now</small>
+                                  <small class="text-muted">Created on ${new Date(response.data.createdAt).toLocaleDateString()} at ${new Date(response.data.createdAt).toLocaleTimeString()}</small>
                               </p>
                           `);
 
-                          // Update the image URL
-                          updatedMemberDiv.find('.card-img-top').attr('src', `/uploads/${response.data.imageUrl || ''}`);
-                    }
-                  } else {
-                      Swal.fire({
-                          title: "Error!",
-                          text: response.message,
-                          icon: "error",
-                          timer: 2000,
-                      });
-                  }
-              }
-          } catch (error) {
-              console.error('Error:', error);
-              Swal.fire({
+                  // Update the image URL
+                  updatedMemberDiv.find('.card-img-top').attr('src', `/uploads/${response.data.imageUrl || ''}`);
+                }
+              } else {
+                Swal.fire({
                   title: "Error!",
-                  text: "Failed to save changes. Please try again.",
+                  text: response.message,
                   icon: "error",
-              });
+                  timer: 2000,
+                });
+              }
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to save changes. Please try again.",
+              icon: "error",
+            });
           }
-      });
+        });
 
-      $('#mine').on('click', async function (e) {
-        e.preventDefault();
-        console.log('imefika');
-        $('#updateMember').hide(); // hide Update button
-        $('#addNewMember').show(); // Show add button
-      });
+        $('#mine').on('click', async function (e) {
+          e.preventDefault();
+          console.log('imefika');
+          $('#updateMember').hide(); // hide Update button
+          $('#addNewMember').show(); // Show add button
+        });
 
-      // Handle form submission
-      $('#addNewMember').on('click', async function (e) {
+        // Handle form submission
+        $('#addNewMember').on('click', async function (e) {
           e.preventDefault();
 
-              // Synchronize CKEditor content with the textarea
-            //   if (CKEDITOR.instances.editor) {
-            //     CKEDITOR.instances.editor.updateElement();
-            //     // Convert HTML to plain text
-            //     const editorContent = CKEDITOR.instances.editor.getData();
-            //     const plainText = editorContent.replace(/<[^>]*>?/gm, '').trim(); // Remove HTML tags and trim whitespace
-            //     $('#editor').val(plainText); // Update the textarea with plain text
-            // }
-
-            if (CKEDITOR.instances.editor) {
-                CKEDITOR.instances.editor.updateElement();
-                const editorContent = CKEDITOR.instances.editor.getData(); // Get the full HTML content
-                $('#editor').val(editorContent); // Save the HTML content in the textarea
-            }
+          if (CKEDITOR.instances.editor) {
+            CKEDITOR.instances.editor.updateElement();
+            const editorContent = CKEDITOR.instances.editor.getData(); // Get the full HTML content
+            $('#editor').val(editorContent); // Save the HTML content in the textarea
+          }
 
           // Create FormData object to handle multiple files and other inputs
           const formData = new FormData($('#memberlist-form')[0]);
@@ -1190,77 +1015,211 @@ function cancelImage(imageId, fileInputId) {
 
           // Log FormData to see the files and other fields
           console.log([...formData.entries()]);
-
+          $('#addmemberModal').modal('hide');
+           // Show spinner before sending request
+            
           try {
-              // AJAX request using async/await
-              const response = await $.ajax({
-                  url: '/admin/createv',
-                  method: 'POST',
-                  data: formData,
-                  processData: false, // Prevent jQuery from automatically processing data
-                  contentType: false, // Use FormData's default content type
-                  cache: false, // Prevent caching
+            // AJAX request using async/await
+            showSpinner();
+            const response = await $.ajax({
+              url: '/admin/createv',
+              method: 'POST',
+              data: formData,
+              processData: false, // Prevent jQuery from automatically processing data
+              contentType: false, // Use FormData's default content type
+              cache: false, // Prevent caching
+            });
+
+              // Hide spinner after data is loaded
+              hideSpinner();
+
+            // Handle different status codes
+            if (response && response.statusCode === 201) {
+              // Reset form fields
+              $('#memberlist-form')[0].reset();
+              $('#customFile1').val('');  // Clear the image input field
+              // Hide the modal
+              
+              Swal.fire({
+                title: "Good job!",
+                text: response.message,
+                icon: "success",
+                timer: 2000, // Close after 2000 milliseconds
               });
 
-              // Handle different status codes
-              if (response && response.statusCode === 201) {
+              // Fetch team members again after success
+              //await fetchEvent();
 
-                // Reset form fields
-                $('#memberlist-form')[0].reset();
-                $('#customFile1').val('');  // Clear the image input field
-                 // Hide the modal
-                 $('#addmemberModal').modal('hide');
+              // Add the newly created event to the DOM
+              const newEvent = response.data; // Assuming response.data contains the newly created event
+              const newCard = `
+                        <div class="col-xl-4 col-lg-6 col-md-6 mb-4" data-member-id="${newEvent.id}">
+                            <div class="card h-100 shadow-sm">
+                                <!-- Card Image -->
+                                <img
+                                    class="card-img-top img-fluid"
+                                    src="/uploads/${newEvent.imageUrl || 'default.jpg'}"
+                                    alt="Team member image"
+                                    style="object-fit: cover; height: 200px;"
+                                />
+                                <!-- Card Body -->
+                                <div class="card-body text-center">
+                                    <h5 class="card-title mb-1">${newEvent.title}</h5>
+                                    <p class="card-text text-muted mb-2">${newEvent.about}</p>
+                                    <p class="card-text datee">
+                                        <small class="text-muted">Created on ${new Date(newEvent.createdAt).toLocaleDateString()} at ${new Date(newEvent.createdAt).toLocaleTimeString()}</small>
+                                    </p>
+                                </div>
+                                <!-- Card Footer -->
+                                <div class="card-footer bg-white text-center">
+                                    <ul class="list-inline mb-0">
+                                        <li class="list-inline-item">
+                                            <!-- Edit Icon -->
+                                            <a
+                                                href="javascript:void(0);"
+                                                class="btn btn-outline-success btn-sm edit-member"
+                                                data-id="${newEvent.id}"
+                                            >
+                                                <i class="ri-edit-2-line"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <!-- Delete Icon -->
+                                            <a
+                                                href="javascript:void(0);"
+                                                class="btn btn-outline-danger btn-sm delete-member"
+                                            >
+                                                <i class="ri-delete-bin-line"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    `;
 
-                  Swal.fire({
-                      title: "Good job!",
-                      text: response.message,
-                      icon: "success",
-                      timer: 2000, // Close after 2000 milliseconds
-                  });
+              // Append the new card to the container
+              $('#team-members-container').prepend(newCard);
 
-                  // Fetch team members again after success
-                  await fetchEvent();
-              } else if (response && response.statusCode === 400) {
-                  Swal.fire({
-                      title: "Error!",
-                      text: response.message,
-                      icon: "error",
-                  });
-              } else {
-                  Swal.fire({
-                      title: "Unexpected Status!",
-                      text: "Something went wrong. Please try again later.",
-                      icon: "warning",
-                  });
-              }
+            } else if (response && response.statusCode === 400) {
+              Swal.fire({
+                title: "Error!",
+                text: response.message,
+                icon: "error",
+              });
+            } else {
+              Swal.fire({
+                title: "Unexpected Status!",
+                text: "Something went wrong. Please try again later.",
+                icon: "warning",
+              });
+            }
           } catch (error) {
-              console.error('Error:', error);
+            console.error('Error:', error);
 
-              // Handle errors specifically using the responseJSON
-              if (error.status === 400 && error.responseJSON) {
-                  Swal.fire({
-                      title: "Error!",
-                      text: error.responseJSON.message || "Client-side error occurred.",
-                      icon: "error",
-                  });
-              } else {
-                  Swal.fire({
-                      title: "Error!",
-                      text: "Failed to submit the form. Please check your connection and try again.",
-                      icon: "error",
-                  });
-              }
+            // Handle errors specifically using the responseJSON
+            if (error.status === 400 && error.responseJSON) {
+              Swal.fire({
+                title: "Error!",
+                text: error.responseJSON.message || "Client-side error occurred.",
+                icon: "error",
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Failed to submit the form. Please check your connection and try again.",
+                icon: "error",
+              });
+            }
           }
+        });
+
+        function showSpinner() {
+                      // Show spinner
+                      const spinner = `
+              <div id="team-members-spinner" class="spinner-container">
+                <div class="d-flex justify-content-center align-items-center vh-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="200" height="200" style="shape-rendering: auto; display: block; background: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g><g transform="translate(80,50)">
+                      <g transform="rotate(0)">
+                        <circle fill-opacity="1" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.875s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.875s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(71.21320343559643,71.21320343559643)">
+                      <g transform="rotate(45)">
+                        <circle fill-opacity="0.875" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.75s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.75s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(50,80)">
+                      <g transform="rotate(90)">
+                        <circle fill-opacity="0.75" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.625s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.625s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(28.786796564403577,71.21320343559643)">
+                      <g transform="rotate(135)">
+                        <circle fill-opacity="0.625" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.5s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.5s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(20,50.00000000000001)">
+                      <g transform="rotate(180)">
+                        <circle fill-opacity="0.5" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.375s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.375s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(28.78679656440357,28.786796564403577)">
+                      <g transform="rotate(225)">
+                        <circle fill-opacity="0.375" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.25s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.25s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(49.99999999999999,20)">
+                      <g transform="rotate(270)">
+                        <circle fill-opacity="0.25" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.125s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.125s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(71.21320343559643,28.78679656440357)">
+                      <g transform="rotate(315)">
+                        <circle fill-opacity="0.125" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="0s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="0s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>`;
+            $('body').append(spinner);
+        }
+
+        // Function to hide the spinner
+        function hideSpinner() {
+          $('#team-members-spinner').remove();
+        }
+                // Initial fetch
+        setTimeout(fetchEvent, 1000);
       });
+    </script>
 
-      // Initial fetch
-      setTimeout(fetchEvent, 1000);
-  });
-</script>
+</body>
+<!-- Mirrored from themesbrand.com/velzon/html/material/pages-team.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 Sep 2024 18:56:53 GMT -->
 
-  </body>
-  <!-- Mirrored from themesbrand.com/velzon/html/material/pages-team.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 Sep 2024 18:56:53 GMT -->
 </html>
-
-
-

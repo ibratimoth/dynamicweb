@@ -43,6 +43,21 @@
     />
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 
+    <style>
+      .spinner-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999; /* Ensures it's above other content */
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(21, 21, 41, 0.5); /* Optional: background shade */
+  }
+    </style>
   </head>
 
   <body>
@@ -777,16 +792,7 @@ function cancelImage(imageId, fileInputId) {
       async function fetchCarousel() {
           try {
               // Show spinner
-              const spinner = `
-                  <div id="team-members-spinner" class="spinner-container">
-                    <div class="d-flex justify-content-center align-items-center vh-70">
-                        <div class="spinner-grow" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                </div>`;
-              $('body').append(spinner); // Append the spinner to the body to avoid conflicts
-
+              showSpinner()
               const response = await $.ajax({
                   url: '/admin/carousels',
                   method: 'GET',
@@ -794,8 +800,8 @@ function cancelImage(imageId, fileInputId) {
               });
 
               // Remove spinner after data is loaded
-              $('#team-members-spinner').remove();
-
+              //$('#team-members-spinner').remove();
+              hideSpinner()
               // Check if response is successful
               if (response && response.statusCode === 200) {
                   const teamMembers = response.data;
@@ -889,11 +895,12 @@ function cancelImage(imageId, fileInputId) {
        // Function to delete a Carousel
        async function deleteCarousel(memberId) {
           try {
+            showSpinner()
               const response = await $.ajax({
                   url: `/admin/deletec/${memberId}`,
                   method: 'DELETE',
               });
-
+              hideSpinner()
               if (response && response.statusCode === 200) {
                   Swal.fire({
                       title: "Deleted!",
@@ -1009,11 +1016,8 @@ function cancelImage(imageId, fileInputId) {
             });
 
             if (result.isConfirmed) {
-        //       const url = $('#addNewMember').data('action') === 'update'
-        //     ? `/admin/update/${memberId}`
-        //     : '/admin/create';
-
-        // const method = $('#addNewMember').data('action') === 'update' ? 'PUT' : 'POST';
+              $('#addmemberModal').modal('hide'); // Hide the modal
+              showSpinner()
 
                 const response = await $.ajax({
                     url: `/admin/updatec/${memberId}`,
@@ -1022,9 +1026,9 @@ function cancelImage(imageId, fileInputId) {
                     processData: false,
                     contentType: false,
                 });
-
+                hideSpinner()
                 if (response && response.statusCode === (memberId ? 200 : 201)) {
-                    $('#addmemberModal').modal('hide'); // Hide the modal
+                   
                     $('#updateMember').hide(); // hide Update button
                     $('#addNewMember').show(); // Show add button
                     Swal.fire({
@@ -1035,7 +1039,27 @@ function cancelImage(imageId, fileInputId) {
                     });
 
                     // Fetch team members again
-                    await fetchCarousel();
+                    //await fetchCarousel();
+
+                // Update the DOM directly
+                const updatedMemberDiv = $(`div[data-member-id="${memberId}"]`);
+                if (updatedMemberDiv.length) {
+
+                  // Clear the entire content of the card body to prevent duplication
+                  updatedMemberDiv.find('.card-body').empty();
+
+                  // Manually insert the updated title, about, and image inside the card body to match your structure
+                  updatedMemberDiv.find('.card-body').append(`
+                              <h5 class="card-title mb-1">${response.data.name || ''}</h5>
+                              <p class="card-text text-muted mb-2">${response.data.slogan || ''}</p>
+                              <p class="card-text">
+                                  <small class="text-muted">Created on ${new Date(response.data.createdAt).toLocaleDateString()} at ${new Date(response.data.createdAt).toLocaleTimeString()}</small>
+                              </p>
+                          `);
+
+                  // Update the image URL
+                  updatedMemberDiv.find('.card-img-top').attr('src', `/uploads/${response.data.imageUrl || ''}`);
+                }
                 } else {
                     Swal.fire({
                         title: "Error!",
@@ -1138,6 +1162,86 @@ function cancelImage(imageId, fileInputId) {
           }
       });
 
+      function showSpinner() {
+                      // Show spinner
+                      const spinner = `
+              <div id="team-members-spinner" class="spinner-container">
+                <div class="d-flex justify-content-center align-items-center vh-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="200" height="200" style="shape-rendering: auto; display: block; background: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g><g transform="translate(80,50)">
+                      <g transform="rotate(0)">
+                        <circle fill-opacity="1" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.875s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.875s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(71.21320343559643,71.21320343559643)">
+                      <g transform="rotate(45)">
+                        <circle fill-opacity="0.875" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.75s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.75s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(50,80)">
+                      <g transform="rotate(90)">
+                        <circle fill-opacity="0.75" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.625s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.625s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(28.786796564403577,71.21320343559643)">
+                      <g transform="rotate(135)">
+                        <circle fill-opacity="0.625" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.5s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.5s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(20,50.00000000000001)">
+                      <g transform="rotate(180)">
+                        <circle fill-opacity="0.5" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.375s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.375s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(28.78679656440357,28.786796564403577)">
+                      <g transform="rotate(225)">
+                        <circle fill-opacity="0.375" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.25s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.25s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(49.99999999999999,20)">
+                      <g transform="rotate(270)">
+                        <circle fill-opacity="0.25" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="-0.125s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="-0.125s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                    <g transform="translate(71.21320343559643,28.78679656440357)">
+                      <g transform="rotate(315)">
+                        <circle fill-opacity="0.125" fill="#151529" r="6" cy="0" cx="0">
+                          <animateTransform repeatCount="indefinite" dur="1s" keyTimes="0;1" values="1.5 1.5;1 1" begin="0s" type="scale" attributeName="transform"></animateTransform>
+                          <animate begin="0s" values="1;0" repeatCount="indefinite" dur="1s" keyTimes="0;1" attributeName="fill-opacity"></animate>
+                        </circle>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>`;
+            $('body').append(spinner);
+        }
+
+        // Function to hide the spinner
+        function hideSpinner() {
+          $('#team-members-spinner').remove();
+        }
       // Initial fetch
       setTimeout(fetchCarousel, 1000);
   });
