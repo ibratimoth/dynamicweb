@@ -321,7 +321,7 @@
                                     </div>
                         
                                     <!-- CKEditor Text Area -->
-                                    <div class="mb-4">
+                                    <!-- <div class="mb-4">
                                       <label for="description" class="form-label">Detailed Description</label>
                                       <textarea
                                         class="form-control"
@@ -332,7 +332,7 @@
                                         required
                                       ></textarea>
                                       <div class="invalid-feedback">Please provide a detailed description.</div>
-                                    </div>
+                                    </div> -->
                                     <input type="hidden" id="project-input" class="form-control" value="">
                                     <input type="hidden" id="task-input" class="form-control" value="">
                         
@@ -871,6 +871,7 @@ function cancelImage(imageId, fileInputId) {
                       });
                   }
               } else {
+                hideSpinner()
                   Swal.fire({
                       title: "Error!",
                       text: response.message,
@@ -879,7 +880,7 @@ function cancelImage(imageId, fileInputId) {
               }
           } catch (error) {
               console.error('Error:', error);
-
+              hideSpinner()
               // Handle errors specifically
               Swal.fire({
                   title: "Error!",
@@ -912,6 +913,7 @@ function cancelImage(imageId, fileInputId) {
                   // Remove the member card from the DOM
                   $(`div[data-member-id="${memberId}"]`).remove();
               } else {
+                hideSpinner()
                   Swal.fire({
                       title: "Error!",
                       text: response.message || "Failed to delete the carousel.",
@@ -919,6 +921,7 @@ function cancelImage(imageId, fileInputId) {
                   });
               }
           } catch (error) {
+            hideSpinner()
               console.error('Error:', error);
               Swal.fire({
                   title: "Error!",
@@ -1061,6 +1064,7 @@ function cancelImage(imageId, fileInputId) {
                   updatedMemberDiv.find('.card-img-top').attr('src', `/uploads/${response.data.imageUrl || ''}`);
                 }
                 } else {
+                  hideSpinner()
                     Swal.fire({
                         title: "Error!",
                         text: response.message,
@@ -1070,6 +1074,7 @@ function cancelImage(imageId, fileInputId) {
                 }
             }
         } catch (error) {
+          hideSpinner()
             console.error('Error:', error);
             Swal.fire({
                 title: "Error!",
@@ -1099,9 +1104,12 @@ function cancelImage(imageId, fileInputId) {
 
           // Log FormData to see the files and other fields
           console.log([...formData.entries()]);
+         // Hide the modal
+          $('#addmemberModal').modal('hide');
 
           try {
               // AJAX request using async/await
+              showSpinner()
               const response = await $.ajax({
                   url: '/admin/createc',
                   method: 'POST',
@@ -1111,14 +1119,13 @@ function cancelImage(imageId, fileInputId) {
                   cache: false, // Prevent caching
               });
 
+              hideSpinner()
               // Handle different status codes
               if (response && response.statusCode === 201) {
 
                 // Reset form fields
                 $('#memberlist-form')[0].reset();
                 $('#customFile1').val('');  // Clear the image input field
-                 // Hide the modal
-                 $('#addmemberModal').modal('hide');
 
                   Swal.fire({
                       title: "Good job!",
@@ -1128,14 +1135,67 @@ function cancelImage(imageId, fileInputId) {
                   });
 
                   // Fetch team members again after success
-                  await fetchCarousel();
+                  //await fetchCarousel();
+
+                  const newEvent = response.data; // Assuming response.data contains the newly created event
+              const newCard = `
+                        <div class="col-xl-4 col-lg-6 col-md-6 mb-4" data-member-id="${newEvent.id}">
+                            <div class="card h-100 shadow-sm">
+                                <!-- Card Image -->
+                                <img
+                                    class="card-img-top img-fluid"
+                                    src="/uploads/${newEvent.imageUrl || 'default.jpg'}"
+                                    alt="Team member image"
+                                    style="object-fit: cover; height: 200px;"
+                                />
+                                <!-- Card Body -->
+                                <div class="card-body text-center">
+                                    <h5 class="card-title mb-1">${newEvent.name}</h5>
+                                    <p class="card-text text-muted mb-2">${newEvent.slogan}</p>
+                                    <p class="card-text datee">
+                                        <small class="text-muted">Created on ${new Date(newEvent.createdAt).toLocaleDateString()} at ${new Date(newEvent.createdAt).toLocaleTimeString()}</small>
+                                    </p>
+                                </div>
+                                <!-- Card Footer -->
+                                <div class="card-footer bg-white text-center">
+                                    <ul class="list-inline mb-0">
+                                        <li class="list-inline-item">
+                                            <!-- Edit Icon -->
+                                            <a
+                                                href="javascript:void(0);"
+                                                class="btn btn-outline-success btn-sm edit-member"
+                                                data-id="${newEvent.id}"
+                                            >
+                                                <i class="ri-edit-2-line"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <!-- Delete Icon -->
+                                            <a
+                                                href="javascript:void(0);"
+                                                class="btn btn-outline-danger btn-sm delete-member"
+                                            >
+                                                <i class="ri-delete-bin-line"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+              // Append the new card to the container
+              $('#team-members-container').prepend(newCard);
+
               } else if (response && response.statusCode === 400) {
+                hideSpinner()
                   Swal.fire({
                       title: "Error!",
                       text: response.message,
                       icon: "error",
                   });
               } else {
+                hideSpinner()
                   Swal.fire({
                       title: "Unexpected Status!",
                       text: "Something went wrong. Please try again later.",
@@ -1143,6 +1203,7 @@ function cancelImage(imageId, fileInputId) {
                   });
               }
           } catch (error) {
+            hideSpinner()
               console.error('Error:', error);
 
               // Handle errors specifically using the responseJSON
@@ -1153,6 +1214,7 @@ function cancelImage(imageId, fileInputId) {
                       icon: "error",
                   });
               } else {
+                hideSpinner()
                   Swal.fire({
                       title: "Error!",
                       text: "Failed to submit the form. Please check your connection and try again.",

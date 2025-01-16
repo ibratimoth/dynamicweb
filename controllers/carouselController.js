@@ -112,7 +112,8 @@ class CarouselController {
                 updatedData.imageUrl = req.file ? req.file.filename : null;
             }
 
-            const validation = this.validatorHelper.validateNameTitleAndImage(updatedData);
+            const validation = this.validatorHelper.validateNameSloganAndImage(updatedData);
+            
             if (!validation.valid) {
                 return this.responseHandler.sendResponse(
                     res,
