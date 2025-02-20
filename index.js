@@ -25,10 +25,13 @@ app.use(express.static('public'));
 
 //routes
 // app.use(router)
+app.get('/', (req, res) => {
+    res.render('index1');
+});
 app.use('/Home', require('./routes/userRoutes'));
 app.use('/admin', require('./routes/adminRoutes'));
 
-const PORT = process.env.PORT || 8086;
+const PORT = process.env.PORT || 5004;
 app.listen(PORT, function(){
     console.log(`Server is running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan.white)
 })
