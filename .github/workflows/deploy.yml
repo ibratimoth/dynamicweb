@@ -1,0 +1,40 @@
+name: Deploy to VM
+
+on:
+  push:
+    branches:
+      - main # Change this if needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.14.0 # Use an exact version if needed
+
+      - name: Install dependencies
+        run: npm ci # Faster and more reliable than `npm install`
+
+      - name: Build the project (if needed)
+        run: npm run build # Remove if no build step
+
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_IP }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.VM_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            git fetch --all
+            git pull --rebase origin main # Prevents data loss, safer than reset --hard
+            npm cache clean --force
+            npm install --production
+            pm2 reload dw --update-env # Zero-downtime restart
