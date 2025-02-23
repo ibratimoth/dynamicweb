@@ -28,7 +28,6 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     res.render('index1');
 });
-
 app.use('/Home', require('./routes/userRoutes'));
 app.use('/admin', require('./routes/adminRoutes'));
 
