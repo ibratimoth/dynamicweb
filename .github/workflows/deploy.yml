@@ -21,20 +21,28 @@ jobs:
       - name: Install dependencies
         run: npm ci # Faster and more reliable than `npm install`
 
-      - name: Build the project (if needed)
-        run: npm run build # Remove if no build step
-
       - name: Deploy to VM
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.10  # Stable version instead of master
         with:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USERNAME }}
           key: ${{ secrets.VM_PRIVATE_KEY }}
           port: 22
           script: |
+            echo "Navigating to the deployment path"
             cd ${{ secrets.DEPLOY_PATH }}
+
+            echo "Fetching the latest code"
             git fetch --all
+
+            echo "Pulling the latest changes from the main branch"
             git pull --rebase origin main # Prevents data loss, safer than reset --hard
+
+            echo "Cleaning npm cache"
             npm cache clean --force
+
+            echo "Installing production dependencies"
             npm install --production
-            pm2 reload dw --update-env # Zero-downtime restart
+
+            echo "Reloading PM2 application for zero-downtime restart"
+            pm2 reload dw --update-env # Ensure that pm2 is managing the correct app
