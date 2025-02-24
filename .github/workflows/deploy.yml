@@ -1,0 +1,41 @@
+name: Deploy to VM
+
+on:
+  push:
+    branches:
+      - main # Or the branch you want to trigger deployments from
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.X # Or your preferred Node.js version
+
+      - name: Install dependencies
+        run: npm ci # Or yarn install
+
+      - name: Build (if needed) # Only if you have a build step
+        run: npm run build # Or yarn build
+
+      - name: Deploy to VM
+        uses: appleboy/ghaction-ssh@master
+        with:
+          host: ${{ secrets.VM_IP }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.VM_PRIVATE_KEY }}
+          port: 22 # Usually 22, change if necessary
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            git pull origin main # Update the code on the VM
+            npm install --production # Install only production dependencies
+            pm2 restart dw # Or your PM2 app name, or other restart command
+            # or
+            # yarn install --production
+            # pm2 restart dw
