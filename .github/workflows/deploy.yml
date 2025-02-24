@@ -3,7 +3,7 @@ name: Deploy to VM
 on:
   push:
     branches:
-      - main # Or the branch you want to trigger deployments from
+      - main # Change this if needed
 
 jobs:
   deploy:
@@ -16,26 +16,26 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 22.X # Or your preferred Node.js version
+          node-version: 22.14.0 # Use an exact version if needed
 
       - name: Install dependencies
-        run: npm ci # Or yarn install
+        run: npm ci # Faster and more reliable than `npm install`
 
-      - name: Build (if needed) # Only if you have a build step
-        run: npm run build # Or yarn build
+      - name: Build the project (if needed)
+        run: npm run build # Remove if no build step
 
       - name: Deploy to VM
-        uses: appleboy/ghaction-ssh@master
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USERNAME }}
           key: ${{ secrets.VM_PRIVATE_KEY }}
-          port: 22 # Usually 22, change if necessary
+          port: 22
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
-            git pull origin main # Update the code on the VM
-            npm install --production # Install only production dependencies
-            pm2 restart dw # Or your PM2 app name, or other restart command
-            # or
-            # yarn install --production
-            # pm2 restart dw
+            git fetch --all
+            git reset --hard origin/main # Ensures a clean state
+            git pull origin main
+            npm cache clean --force
+            npm install --production
+            pm2 reload dw --update-env # Zero-downtime restart
